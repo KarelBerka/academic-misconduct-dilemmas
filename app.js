@@ -622,10 +622,16 @@
       `;
     });
 
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
+    const nodeBg = isLight ? "#ffffff" : "#1e293b";
+    const nodeBorder = isLight ? "#cbd5e1" : "#334155";
+    const nodeText = isLight ? "#0f172a" : "#f8fafc";
+    const headerText = isLight ? "#64748b" : "#94a3b8";
+
     container.innerHTML = `
       <div class="flow-diagram-wrapper">
         <svg width="100%" height="${totalHeight}" viewBox="0 0 ${width} ${totalHeight}" style="min-width: 800px;">
-          <text x="${c1X + colWidth/2}" y="22" fill="#94a3b8" font-size="12" font-weight="700" text-anchor="middle">
+          <text x="${c1X + colWidth/2}" y="22" fill="${headerText}" font-size="12" font-weight="700" text-anchor="middle">
             ${state.flowFirstColumnMode === 'user' ? '👤 YOUR LOCAL RATINGS (ELO)' : '🌐 COMMUNITY OPINION (ELO)'}
           </text>
           <text x="${c2X + colWidth/2}" y="22" fill="#38bdf8" font-size="12" font-weight="700" text-anchor="middle">
@@ -642,8 +648,8 @@
             const y = 40 + idx * (itemHeight + gap);
             return `
               <g transform="translate(${c1X}, ${y})">
-                <rect width="${colWidth}" height="${itemHeight}" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-                <text x="10" y="22" fill="#f8fafc" font-size="11" font-weight="600">${idx + 1}. ${item.name.substring(0, 26)}...</text>
+                <rect width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
+                <text x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">${idx + 1}. ${item.name.substring(0, 26)}...</text>
               </g>
             `;
           }).join("")}
@@ -653,8 +659,8 @@
             const y = 40 + idx * (itemHeight + gap);
             return `
               <g transform="translate(${c2X}, ${y})">
-                <rect width="${colWidth}" height="${itemHeight}" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-                <text x="10" y="22" fill="#f8fafc" font-size="11" font-weight="600">${idx + 1}. ${item.name.substring(0, 26)}...</text>
+                <rect width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
+                <text x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">${idx + 1}. ${item.name.substring(0, 26)}...</text>
               </g>
             `;
           }).join("")}
@@ -664,8 +670,8 @@
             const y = 40 + idx * (itemHeight + gap);
             return `
               <g transform="translate(${c3X}, ${y})">
-                <rect width="${colWidth}" height="${itemHeight}" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-                <text x="10" y="22" fill="#f8fafc" font-size="11" font-weight="600">${idx + 1}. ${item.name.substring(0, 26)}...</text>
+                <rect width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
+                <text x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">${idx + 1}. ${item.name.substring(0, 26)}...</text>
               </g>
             `;
           }).join("")}
@@ -855,14 +861,84 @@
     });
   }
 
+  // =========================================================================
+  // THEME MANAGEMENT (LIGHT / DARK MODE)
+  // =========================================================================
+
+  function getCurrentTheme() {
+    const docTheme = document.documentElement.getAttribute("data-theme");
+    if (docTheme === "light" || docTheme === "dark") return docTheme;
+    const stored = localStorage.getItem("academic_theme");
+    if (stored === "light" || stored === "dark") return stored;
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+      return "light";
+    }
+    return "dark";
+  }
+
+  function updateThemeToggleUI(theme) {
+    const iconEl = document.getElementById("theme-toggle-icon");
+    const textEl = document.getElementById("theme-toggle-text");
+    const btnEl = document.getElementById("theme-toggle-btn");
+
+    const isLight = theme === "light";
+    if (iconEl) iconEl.textContent = isLight ? "☀️" : "🌙";
+    if (textEl) textEl.textContent = isLight ? "Light" : "Dark";
+    if (btnEl) {
+      btnEl.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
+      btnEl.setAttribute("title", isLight ? "Switch to dark mode" : "Switch to light mode");
+    }
+  }
+
+  function setTheme(theme) {
+    const validTheme = theme === "light" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", validTheme);
+    try {
+      localStorage.setItem("academic_theme", validTheme);
+    } catch (e) {}
+    updateThemeToggleUI(validTheme);
+
+    if (state.rankingViewMode === "flow") {
+      const activeTab = document.querySelector(".view-section.active");
+      if (activeTab && activeTab.id === "view-ranking") {
+        renderRankingView();
+      }
+    }
+  }
+
+  function toggleTheme() {
+    const current = getCurrentTheme();
+    const nextTheme = current === "light" ? "dark" : "light";
+    setTheme(nextTheme);
+  }
+
+  function initTheme() {
+    const initialTheme = getCurrentTheme();
+    setTheme(initialTheme);
+
+    const btn = document.getElementById("theme-toggle-btn");
+    btn?.addEventListener("click", toggleTheme);
+
+    if (window.matchMedia) {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
+        if (!localStorage.getItem("academic_theme")) {
+          setTheme(e.matches ? "dark" : "light");
+        }
+      });
+    }
+  }
+
   // Application Startup
   window.App = {
     handleVote,
     loadNewDuel,
-    switchTab
+    switchTab,
+    setTheme,
+    toggleTheme
   };
 
   document.addEventListener("DOMContentLoaded", async () => {
+    initTheme();
     await loadStoredData();
     setupEventListeners();
     loadNewDuel();
