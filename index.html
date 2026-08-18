@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="description" content="Academic Misconduct Dilemmas: An interactive comparator of scientific fraud, data fabrication, plagiarism, and research ethics violations based on Retraction Watch, ORI, and COPE standards.">
+  <title>Academic Misconduct Dilemmas | Research Integrity Comparator</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand" onclick="window.App.switchTab('view-duel')">
+        <div class="brand-icon">🎓</div>
+        <div>
+          <div class="brand-title">Academic Dilemmas</div>
+          <div class="brand-subtitle">Research Integrity Comparator</div>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" aria-label="Main navigation">
+        <button class="nav-tab active" data-target="view-duel" id="nav-duel-btn">
+          <span>⚔️</span>
+          <span>Dilemma & Duel</span>
+        </button>
+        <button class="nav-tab" data-target="view-ranking" id="nav-ranking-btn">
+          <span>📊</span>
+          <span>Severity Rankings</span>
+        </button>
+        <button class="nav-tab" data-target="view-catalog" id="nav-catalog-btn">
+          <span>📖</span>
+          <span>Misconduct Catalog</span>
+        </button>
+        <button class="nav-tab" data-target="view-profile" id="nav-profile-btn">
+          <span>👤</span>
+          <span>Integrity Profile</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-main">
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: DUEL ARENA                         -->
+    <!-- ========================================== -->
+    <section class="view-section active" id="view-duel">
+      <div class="arena-hero">
+        <h1 class="arena-title">Which Academic Offense is More Severe?</h1>
+        <p class="arena-subtitle">
+          Compare two concrete research integrity violations and select the one that represents a more dangerous breach of scientific ethics.
+        </p>
+      </div>
+
+      <div class="duel-controls-bar">
+        <div class="progress-pill">
+          <span>Evaluated Dilemmas:</span>
+          <span class="count" id="duel-counter-val">0</span>
+        </div>
+
+        <div id="cloud-status-badge" style="font-size:0.8rem; font-weight:600; padding:0.3rem 0.75rem; border-radius:9999px; background:var(--bg-surface); border:1px solid var(--border-subtle); cursor:default;">
+          💾 Local Mode
+        </div>
+      </div>
+
+      <!-- Duel Arena Grid -->
+      <div id="duel-arena">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Matchup Result Panel (Shown after vote) -->
+      <div class="matchup-result-panel" id="matchup-result-panel">
+        <div class="result-panel-header">
+          <div class="verdict-heading" id="verdict-heading-text">⚖️ Evaluating Dilemma...</div>
+          <button class="next-duel-btn" id="next-duel-btn" type="button">
+            <span>Next Dilemma (Space / Enter)</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.5;" id="verdict-explanation-text"></p>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: RANKINGS & FLOW                    -->
+    <!-- ========================================== -->
+    <section class="view-section" id="view-ranking">
+      <div class="arena-hero">
+        <h1 class="arena-title">Academic Misconduct Severity Rankings</h1>
+        <p class="arena-subtitle">
+          Compare public community perception (Elo rating) against regulatory policy standards (ORI/COPE) and real-world disciplinary sanctions.
+        </p>
+      </div>
+
+      <div class="rankings-toolbar">
+        <div class="view-toggle-group">
+          <button class="toggle-btn active" id="toggle-view-flow">🌊 Alluvial Flow Graph</button>
+          <button class="toggle-btn" id="toggle-view-list">📋 Standard List</button>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <label for="sort-mode-select" style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Rank by:</label>
+          <select id="sort-mode-select" class="catalog-input" style="padding:0.4rem 0.8rem; font-size:0.85rem; width:auto;">
+            <option value="globalPublic">🌐 Community Opinion (Global Elo)</option>
+            <option value="userVotes">👤 Your Personal Voting (Local Elo)</option>
+            <option value="policyBenchmark">⚖️ Institutional Harm Benchmark (ORI/COPE)</option>
+            <option value="careerImpact">🛑 Disciplinary Debarment & Dismissal Rate</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="rankings-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 3: CATALOG & ENCYCLOPEDIA             -->
+    <!-- ========================================== -->
+    <section class="view-section" id="view-catalog">
+      <div class="arena-hero">
+        <h1 class="arena-title">Research Integrity & Misconduct Catalog</h1>
+        <p class="arena-subtitle">
+          Browse comprehensive definitions, institutional guidelines, and Retraction Watch landmark cases.
+        </p>
+      </div>
+
+      <div class="catalog-search-bar">
+        <input type="text" id="catalog-search-input" class="catalog-input" placeholder="Search offenses, landmark cases (e.g. Macchiarini, Stapel, Lesné), or policies...">
+      </div>
+
+      <div class="category-filter-chips">
+        <button class="filter-chip active" data-category="all">All Categories</button>
+        <button class="filter-chip" data-category="FFP">🧪 Data Fabrication & Falsification (FFP)</button>
+        <button class="filter-chip" data-category="ResearchEthics">🧬 Human, Animal & Biosafety</button>
+        <button class="filter-chip" data-category="PublicationFraud">📰 Paper Mills & Peer Review Fraud</button>
+        <button class="filter-chip" data-category="PlagiarismAuthorship">📝 Plagiarism & Authorship Ethics</button>
+        <button class="filter-chip" data-category="GrantGovernance">💼 Grant Governance & Sabotage</button>
+        <button class="filter-chip" data-category="StudentIntegrity">🎓 Student & Classroom Integrity</button>
+      </div>
+
+      <div class="catalog-grid" id="catalog-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 4: INTEGRITY PROFILE                  -->
+    <!-- ========================================== -->
+    <section class="view-section" id="view-profile">
+      <div class="arena-hero">
+        <h1 class="arena-title">Your Research Integrity Profile</h1>
+        <p class="arena-subtitle">
+          Analyze how your ethical judgements compare to international codes of conduct and university disciplinary practices.
+        </p>
+      </div>
+
+      <div id="profile-content-wrapper">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div>
+        <strong>Academic Misconduct Dilemmas</strong> &bull; An open-source research integrity comparator.
+      </div>
+      <div class="footer-links">
+        <a href="https://retractionwatch.com" target="_blank" rel="noopener">Retraction Watch</a>
+        <a href="https://ori.hhs.gov" target="_blank" rel="noopener">US ORI</a>
+        <a href="https://publicationethics.org" target="_blank" rel="noopener">COPE</a>
+        <a href="https://github.com/KarelBerka/academic-misconduct-dilemmas" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="misconduct-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
