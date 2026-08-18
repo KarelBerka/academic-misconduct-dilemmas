@@ -830,6 +830,55 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
+.flow-link {
+  transition: stroke-width 0.2s ease, opacity 0.2s ease, stroke 0.2s ease;
+  cursor: pointer;
+}
+
+.flow-node {
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.flow-node rect {
+  transition: stroke 0.2s ease, stroke-width 0.2s ease, fill 0.2s ease, filter 0.2s ease;
+}
+
+.flow-node text {
+  transition: fill 0.2s ease, font-weight 0.2s ease;
+}
+
+.flow-node-highlighted {
+  opacity: 1 !important;
+}
+
+.flow-node-highlighted rect {
+  stroke: var(--accent-primary) !important;
+  stroke-width: 2px !important;
+  fill: var(--bg-surface-raised) !important;
+  filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.45)) !important;
+}
+
+.flow-node-highlighted text {
+  fill: var(--accent-primary) !important;
+  font-weight: 700 !important;
+}
+
+.flow-node-dimmed {
+  opacity: 0.25 !important;
+}
+
+.flow-link-highlighted {
+  stroke-width: 4.5px !important;
+  opacity: 1 !important;
+  stroke: #38bdf8 !important;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6)) !important;
+}
+
+.flow-link-dimmed {
+  opacity: 0.08 !important;
+}
+
 /* Rankings list */
 .rankings-list {
   display: flex;
@@ -847,6 +896,14 @@ body {
   padding: 0.85rem 1.25rem;
   gap: 1rem;
   transition: all var(--transition-fast);
+  cursor: default;
+}
+
+.ranking-item:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.15);
+  background: var(--bg-surface-raised);
 }
 
 .ranking-item:hover {

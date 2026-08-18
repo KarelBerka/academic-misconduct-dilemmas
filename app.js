@@ -953,8 +953,8 @@
                           item.severityTier === "moderate" ? "rgba(250, 204, 21, 0.3)" : "rgba(52, 211, 153, 0.3)";
 
       svgPaths += `
-        <path d="M ${p1X} ${y1} C ${(p1X + p2X_L) / 2} ${y1}, ${(p1X + p2X_L) / 2} ${y2}, ${p2X_L} ${y2}" fill="none" stroke="${strokeColor}" stroke-width="2" class="flow-link" data-id="${item.id}" />
-        <path d="M ${p2X_R} ${y2} C ${(p2X_R + p3X) / 2} ${y2}, ${(p2X_R + p3X) / 2} ${y3}, ${p3X} ${y3}" fill="none" stroke="${strokeColor}" stroke-width="2" class="flow-link" data-id="${item.id}" />
+        <path d="M ${p1X} ${y1} C ${(p1X + p2X_L) / 2} ${y1}, ${(p1X + p2X_L) / 2} ${y2}, ${p2X_L} ${y2}" fill="none" stroke="${strokeColor}" stroke-width="2" class="flow-link" data-id="${item.id}" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()" />
+        <path d="M ${p2X_R} ${y2} C ${(p2X_R + p3X) / 2} ${y2}, ${(p2X_R + p3X) / 2} ${y3}, ${p3X} ${y3}" fill="none" stroke="${strokeColor}" stroke-width="2" class="flow-link" data-id="${item.id}" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()" />
       `;
     });
 
@@ -984,9 +984,9 @@
             const y = 40 + idx * (itemHeight + gap);
             const name = getField(item, "name");
             return `
-              <g transform="translate(${c1X}, ${y})">
-                <rect width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
-                <text x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">${idx + 1}. ${name.substring(0, 24)}...</text>
+              <g class="flow-node" data-id="${item.id}" transform="translate(${c1X}, ${y})" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()">
+                <rect class="flow-node-rect" width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
+                <text class="flow-node-text" x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">#${idx + 1} ${name.substring(0, 24)}...</text>
               </g>
             `;
           }).join("")}
@@ -996,9 +996,9 @@
             const y = 40 + idx * (itemHeight + gap);
             const name = getField(item, "name");
             return `
-              <g transform="translate(${c2X}, ${y})">
-                <rect width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
-                <text x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">${idx + 1}. ${name.substring(0, 24)}...</text>
+              <g class="flow-node" data-id="${item.id}" transform="translate(${c2X}, ${y})" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()">
+                <rect class="flow-node-rect" width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
+                <text class="flow-node-text" x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">#${idx + 1} ${name.substring(0, 24)}...</text>
               </g>
             `;
           }).join("")}
@@ -1008,15 +1008,45 @@
             const y = 40 + idx * (itemHeight + gap);
             const name = getField(item, "name");
             return `
-              <g transform="translate(${c3X}, ${y})">
-                <rect width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
-                <text x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">${idx + 1}. ${name.substring(0, 24)}...</text>
+              <g class="flow-node" data-id="${item.id}" transform="translate(${c3X}, ${y})" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()">
+                <rect class="flow-node-rect" width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
+                <text class="flow-node-text" x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">#${idx + 1} ${name.substring(0, 24)}...</text>
               </g>
             `;
           }).join("")}
         </svg>
       </div>
     `;
+  }
+
+  function highlightOffenseFlow(offenseId) {
+    const nodes = document.querySelectorAll(".flow-node");
+    const links = document.querySelectorAll(".flow-link");
+
+    nodes.forEach(node => {
+      const isTarget = node.dataset.id === offenseId;
+      node.classList.toggle("flow-node-highlighted", isTarget);
+      node.classList.toggle("flow-node-dimmed", !isTarget);
+    });
+
+    links.forEach(link => {
+      const isTarget = link.dataset.id === offenseId;
+      link.classList.toggle("flow-link-highlighted", isTarget);
+      link.classList.toggle("flow-link-dimmed", !isTarget);
+    });
+  }
+
+  function resetOffenseFlow() {
+    const nodes = document.querySelectorAll(".flow-node");
+    const links = document.querySelectorAll(".flow-link");
+
+    nodes.forEach(node => {
+      node.classList.remove("flow-node-highlighted", "flow-node-dimmed");
+    });
+
+    links.forEach(link => {
+      link.classList.remove("flow-link-highlighted", "flow-link-dimmed");
+    });
   }
 
   // =========================================================================
@@ -1288,7 +1318,9 @@
     setTheme,
     toggleTheme,
     setLanguage,
-    toggleLanguage
+    toggleLanguage,
+    highlightOffenseFlow,
+    resetOffenseFlow
   };
 
   document.addEventListener("DOMContentLoaded", async () => {
