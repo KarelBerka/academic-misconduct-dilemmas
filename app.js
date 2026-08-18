@@ -653,7 +653,12 @@
               <span class="card-category-badge">${itemCategoryLabel}</span>
             </div>
             <h3 class="card-title">${itemName}</h3>
-            <div class="card-standard-ref">📋 ${itemCitation}</div>
+            <div>
+              <a href="${item.standardUrl || '#'}" target="_blank" rel="noopener noreferrer" class="reference-link" onclick="event.stopPropagation();" title="${state.currentLang === 'cs' ? 'Otevřít etický standard / směrnici v novém okně' : 'Open official guideline in new tab'}">
+                <span>📋 ${itemCitation}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
           </div>
 
           <div class="detail-section-title">${t("standardTitle")}</div>
@@ -691,7 +696,10 @@
           <!-- Benchmark Case -->
           <div class="case-study-badge">
             <div class="case-study-title">
-              <span>🏛️ ${t("benchmarkCase")} ${item.caseStudy.name}</span>
+              <a href="${item.caseStudy.url || '#'}" target="_blank" rel="noopener noreferrer" class="case-study-link" onclick="event.stopPropagation();" title="${state.currentLang === 'cs' ? 'Číst podrobnosti kauzy na Retraction Watch / zdrojovém webu' : 'Read case details on Retraction Watch / source'}">
+                <span>🏛️ ${t("benchmarkCase")} ${item.caseStudy.name}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
               ${item.caseStudy.retractionCount > 0 ? `<span style="color:#f43f5e; font-weight:800;">${t("retractionsCount", item.caseStudy.retractionCount)}</span>` : ''}
             </div>
             <div style="font-size:0.75rem; color:var(--text-secondary); line-height:1.4;">
@@ -1052,8 +1060,15 @@
           <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.5; margin-bottom:0.75rem; flex:1;">
             ${itemScenario}
           </p>
-          <div style="background:var(--bg-box-subtle); padding:0.6rem; border-radius:var(--radius-sm); font-size:0.75rem; color:var(--text-muted);">
-            <strong>${t("standardPrefix")}</strong> ${itemCit}
+          <div style="background:var(--bg-box-subtle); padding:0.6rem; border-radius:var(--radius-sm); font-size:0.75rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+            <a href="${item.standardUrl || '#'}" target="_blank" rel="noopener noreferrer" class="case-study-link" style="font-size:0.75rem;" title="${state.currentLang === 'cs' ? 'Otevřít etický standard / směrnici' : 'Open official guideline'}">
+              <span><strong>${t("standardPrefix")}</strong> ${itemCit}</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+            <a href="${item.caseStudy.url || '#'}" target="_blank" rel="noopener noreferrer" class="case-study-link" style="font-size:0.75rem; color:var(--accent-primary); white-space:nowrap;" title="${state.currentLang === 'cs' ? 'Kauza z Retraction Watch' : 'Retraction Watch Benchmark Case'}">
+              <span>🏛️ ${item.caseStudy.name}</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
           </div>
         </div>
       `;
