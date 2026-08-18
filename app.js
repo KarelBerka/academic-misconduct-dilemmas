@@ -140,7 +140,7 @@
       return;
     }
 
-    const tableName = config.votesTable || "academic_votes";
+    const tableName = "academic_votes";
 
     try {
       initGlobalScores();
@@ -209,7 +209,7 @@
     const config = window.ACADEMIC_CONFIG;
     if (!config || !config.supabaseUrl || !config.supabaseAnonKey || !state.isCloudConnected) return;
 
-    const tableName = config.votesTable || "academic_votes";
+    const tableName = "academic_votes";
 
     try {
       await fetch(`${config.supabaseUrl}/rest/v1/${tableName}`, {

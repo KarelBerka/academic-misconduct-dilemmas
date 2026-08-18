@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Cloud storage and matchmaking configuration for Academic Misconduct Dilemmas
  */
 
@@ -9,7 +9,7 @@ window.ACADEMIC_CONFIG = {
   // Your Supabase Publishable / Anon API Key
   supabaseAnonKey: "sb_publishable_IMAMxmi6B1ui_CposyQnGA_G_wZPVcd",
 
-  // Table name for storing votes (default: 'academic_votes' or 'votes')
+  // Dedicated table name exclusively for academic misconduct votes (never use 'votes')
   votesTable: "academic_votes",
 
   // Smart matchmaking settings (Elo proximity matching)
