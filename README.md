@@ -40,9 +40,16 @@
 - **👤 Research Integrity Persona Profile**:
   - Evaluates your ethical alignment against international oversight standards, assigning an ethical persona (*Strict Integrity Officer*, *Balanced Ethics Committee Member*, or *Pragmatic Science Advocate*).
 
+- **🌐 Multilingual Support & Hashtag Linking (EN / CS)**:
+  - Complete, professional bilingual localization in **English** and **Czech** (`#en` / `#cs`).
+  - Seamless hashtag URL linking: append `#cs` (e.g. `https://karelberka.github.io/academic-misconduct-dilemmas/#cs`) to open the app directly in Czech.
+
+- **🌓 Dark & Light Theme**:
+  - Full support for dark and light modes with anti-FOUT and reactive SVG Flow chart adjustments.
+
 - **☁️ Cloud Synchronization (Supabase)**:
   - Pure zero-dependency client-side application running on GitHub Pages.
-  - Seamlessly records and fetches global crowd votes from a Supabase PostgreSQL database with fallback to `localStorage`.
+  - Seamlessly records and fetches global crowd votes from a dedicated `academic_votes` Supabase PostgreSQL database with fallback to `localStorage`.
 
 ---
 

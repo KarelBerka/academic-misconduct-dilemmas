@@ -8,10 +8,14 @@
   <meta name="description" content="Academic Misconduct Dilemmas: An interactive comparator of scientific fraud, data fabrication, plagiarism, and research ethics violations based on Retraction Watch, ORI, and COPE standards.">
   <title>Academic Misconduct Dilemmas | Research Integrity Comparator</title>
 
-  <!-- Theme Initialization (prevents FOUT) -->
+  <!-- Theme & Language Initialization (prevents FOUT) -->
   <script>
     (function() {
       try {
+        const hash = window.location.hash.toLowerCase();
+        const initialLang = (hash.includes('cs') || hash.includes('cz')) ? 'cs' : (localStorage.getItem('academic_lang') || 'en');
+        document.documentElement.setAttribute('lang', initialLang);
+
         const savedTheme = localStorage.getItem('academic_theme');
         const theme = savedTheme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         document.documentElement.setAttribute('data-theme', theme);
@@ -38,31 +42,35 @@
       <div class="brand" onclick="window.App.switchTab('view-duel')">
         <div class="brand-icon">🎓</div>
         <div>
-          <div class="brand-title">Academic Dilemmas</div>
-          <div class="brand-subtitle">Research Integrity Comparator</div>
+          <div class="brand-title" id="brand-title-text">Academic Dilemmas</div>
+          <div class="brand-subtitle" id="brand-subtitle-text">Research Integrity Comparator</div>
         </div>
       </div>
 
       <nav class="nav-tabs" aria-label="Main navigation">
         <button class="nav-tab active" data-target="view-duel" id="nav-duel-btn">
           <span>⚔️</span>
-          <span>Dilemma & Duel</span>
+          <span id="nav-duel-label">Dilemma & Duel</span>
         </button>
         <button class="nav-tab" data-target="view-ranking" id="nav-ranking-btn">
           <span>📊</span>
-          <span>Severity Rankings</span>
+          <span id="nav-ranking-label">Severity Rankings</span>
         </button>
         <button class="nav-tab" data-target="view-catalog" id="nav-catalog-btn">
           <span>📖</span>
-          <span>Misconduct Catalog</span>
+          <span id="nav-catalog-label">Misconduct Catalog</span>
         </button>
         <button class="nav-tab" data-target="view-profile" id="nav-profile-btn">
           <span>👤</span>
-          <span>Integrity Profile</span>
+          <span id="nav-profile-label">Integrity Profile</span>
         </button>
       </nav>
 
       <div class="header-actions">
+        <button id="lang-toggle-btn" class="lang-toggle-btn" type="button" aria-label="Switch Language (EN / CS)" title="Switch Language (EN / CS)">
+          <span class="lang-toggle-icon">🌐</span>
+          <span class="lang-toggle-text" id="lang-toggle-text">Čeština</span>
+        </button>
         <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle Light / Dark Mode" title="Toggle Light / Dark Mode">
           <span class="theme-toggle-icon" id="theme-toggle-icon">🌙</span>
           <span class="theme-toggle-text" id="theme-toggle-text">Dark</span>
@@ -79,15 +87,15 @@
     <!-- ========================================== -->
     <section class="view-section active" id="view-duel">
       <div class="arena-hero">
-        <h1 class="arena-title">Which Academic Offense is More Severe?</h1>
-        <p class="arena-subtitle">
+        <h1 class="arena-title" id="arena-title-text">Which Academic Offense is More Severe?</h1>
+        <p class="arena-subtitle" id="arena-subtitle-text">
           Compare two concrete research integrity violations and select the one that represents a more dangerous breach of scientific ethics.
         </p>
       </div>
 
       <div class="duel-controls-bar">
         <div class="progress-pill">
-          <span>Evaluated Dilemmas:</span>
+          <span id="duel-counter-label">Evaluated Dilemmas:</span>
           <span class="count" id="duel-counter-val">0</span>
         </div>
 
@@ -106,7 +114,7 @@
         <div class="result-panel-header">
           <div class="verdict-heading" id="verdict-heading-text">⚖️ Evaluating Dilemma...</div>
           <button class="next-duel-btn" id="next-duel-btn" type="button">
-            <span>Next Dilemma (Space / Enter)</span>
+            <span id="next-duel-btn-text">Next Dilemma (Space / Enter)</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
@@ -119,8 +127,8 @@
     <!-- ========================================== -->
     <section class="view-section" id="view-ranking">
       <div class="arena-hero">
-        <h1 class="arena-title">Academic Misconduct Severity Rankings</h1>
-        <p class="arena-subtitle">
+        <h1 class="arena-title" id="ranking-title-text">Academic Misconduct Severity Rankings</h1>
+        <p class="arena-subtitle" id="ranking-subtitle-text">
           Compare public community perception (Elo rating) against regulatory policy standards (ORI/COPE) and real-world disciplinary sanctions.
         </p>
       </div>
@@ -132,7 +140,7 @@
         </div>
 
         <div style="display:flex; align-items:center; gap:0.5rem;">
-          <label for="sort-mode-select" style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Rank by:</label>
+          <label for="sort-mode-select" id="rank-by-label" style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Rank by:</label>
           <select id="sort-mode-select" class="catalog-input" style="padding:0.4rem 0.8rem; font-size:0.85rem; width:auto;">
             <option value="globalPublic">🌐 Community Opinion (Global Elo)</option>
             <option value="userVotes">👤 Your Personal Voting (Local Elo)</option>
@@ -152,8 +160,8 @@
     <!-- ========================================== -->
     <section class="view-section" id="view-catalog">
       <div class="arena-hero">
-        <h1 class="arena-title">Research Integrity & Misconduct Catalog</h1>
-        <p class="arena-subtitle">
+        <h1 class="arena-title" id="catalog-title-text">Research Integrity & Misconduct Catalog</h1>
+        <p class="arena-subtitle" id="catalog-subtitle-text">
           Browse comprehensive definitions, institutional guidelines, and Retraction Watch landmark cases.
         </p>
       </div>
@@ -162,14 +170,14 @@
         <input type="text" id="catalog-search-input" class="catalog-input" placeholder="Search offenses, landmark cases (e.g. Macchiarini, Stapel, Lesné), or policies...">
       </div>
 
-      <div class="category-filter-chips">
-        <button class="filter-chip active" data-category="all">All Categories</button>
-        <button class="filter-chip" data-category="FFP">🧪 Data Fabrication & Falsification (FFP)</button>
-        <button class="filter-chip" data-category="ResearchEthics">🧬 Human, Animal & Biosafety</button>
-        <button class="filter-chip" data-category="PublicationFraud">📰 Paper Mills & Peer Review Fraud</button>
-        <button class="filter-chip" data-category="PlagiarismAuthorship">📝 Plagiarism & Authorship Ethics</button>
-        <button class="filter-chip" data-category="GrantGovernance">💼 Grant Governance & Sabotage</button>
-        <button class="filter-chip" data-category="StudentIntegrity">🎓 Student & Classroom Integrity</button>
+      <div class="category-filter-chips" id="category-filter-chips">
+        <button class="filter-chip active" data-category="all" id="filter-all-btn">All Categories</button>
+        <button class="filter-chip" data-category="FFP" id="filter-ffp-btn">🧪 Data Fabrication & Falsification (FFP)</button>
+        <button class="filter-chip" data-category="ResearchEthics" id="filter-ethics-btn">🧬 Human, Animal & Biosafety</button>
+        <button class="filter-chip" data-category="PublicationFraud" id="filter-pub-btn">📰 Paper Mills & Peer Review Fraud</button>
+        <button class="filter-chip" data-category="PlagiarismAuthorship" id="filter-plag-btn">📝 Plagiarism & Authorship Ethics</button>
+        <button class="filter-chip" data-category="GrantGovernance" id="filter-grant-btn">💼 Grant Governance & Sabotage</button>
+        <button class="filter-chip" data-category="StudentIntegrity" id="filter-student-btn">🎓 Student & Classroom Integrity</button>
       </div>
 
       <div class="catalog-grid" id="catalog-grid">
@@ -182,8 +190,8 @@
     <!-- ========================================== -->
     <section class="view-section" id="view-profile">
       <div class="arena-hero">
-        <h1 class="arena-title">Your Research Integrity Profile</h1>
-        <p class="arena-subtitle">
+        <h1 class="arena-title" id="profile-title-text">Your Research Integrity Profile</h1>
+        <p class="arena-subtitle" id="profile-subtitle-text">
           Analyze how your ethical judgements compare to international codes of conduct and university disciplinary practices.
         </p>
       </div>
@@ -198,7 +206,7 @@
   <!-- Footer -->
   <footer class="app-footer">
     <div class="footer-container">
-      <div>
+      <div id="footer-text">
         <strong>Academic Misconduct Dilemmas</strong> &bull; An open-source research integrity comparator.
       </div>
       <div class="footer-links">

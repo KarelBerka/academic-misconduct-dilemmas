@@ -277,6 +277,46 @@ body {
   transform: rotate(15deg) scale(1.1);
 }
 
+.lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  user-select: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.lang-toggle-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface-raised);
+  border-color: var(--border-medium);
+  transform: translateY(-1px);
+}
+
+.lang-toggle-btn:active {
+  transform: translateY(0);
+}
+
+.lang-toggle-icon {
+  font-size: 1rem;
+  line-height: 1;
+  display: inline-block;
+  transition: transform var(--transition-normal);
+}
+
+.lang-toggle-btn:hover .lang-toggle-icon {
+  transform: scale(1.15);
+}
+
 /* Main Container */
 .app-main {
   flex: 1;
