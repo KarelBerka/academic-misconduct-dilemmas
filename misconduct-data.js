@@ -42,7 +42,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Macchiarini implanted synthetic polymer tracheas seeded with stem cells into patients, fabricating success in The Lancet while patients died from severe complications. Convicted of gross bodily harm in Sweden.",
       "summary_cs": "Macchiarini voperoval pacientům plastové průdušnice s kmenovými buňkami. V Lancetu publikoval falešný úspěch, zatímco pacienti umírali. Ve Švédsku byl pravomocně odsouzen za ublížení na zdraví.",
       "retractionWatchTag": "macchiarini-trachea-scandal",
-      "url": "https://retractionwatch.com/category/by-author/paolo-macchiarini/"
+      "url": "https://retractionwatch.com/?s=Paolo+Macchiarini"
     },
     "standardUrl": "https://www.wma.net/policies-post/wma-declaration-of-helsinki/"
   },
@@ -84,7 +84,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Created the world's first gene-edited babies (Lulu and Nana). Sentenced to 3 years in prison by a Chinese court for illegal medical practice and fined 3 million RMB.",
       "summary_cs": "Stvořil první geneticky editované děti na světě (Lulu a Nana). Čínským soudem odsouzen na 3 roky do vězení a k pokutě 3 miliony jüanů.",
       "retractionWatchTag": "crispr-babies-he-jiankui",
-      "url": "https://retractionwatch.com/2019/12/30/crispr-babies-scientist-he-jiankui-sentenced-to-3-years-in-prison/"
+      "url": "https://retractionwatch.com/?s=He+Jiankui"
     },
     "standardUrl": "https://www.unesco.org/en/legal-affairs/universal-declaration-human-genome-and-human-rights"
   },
@@ -126,7 +126,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Investigation by Science revealed dozens of manipulated image panels in seminal Alzheimer's papers cited over 2,500 times, sparking international re-evaluations by NIH and journals.",
       "summary_cs": "Vyšetřování časopisu Science odhalilo desítky zmanipulovaných gelů v klíčových článcích o Alzheimerově chorobě citovaných více než 2 500krát.",
       "retractionWatchTag": "alzheimers-image-manipulation",
-      "url": "https://retractionwatch.com/2024/06/24/nature-retracts-seminal-2006-alzheimers-paper-from-karen-ashe-lab/"
+      "url": "https://retractionwatch.com/?s=Sylvain+Lesne+Karen+Ashe"
     },
     "standardUrl": "https://ori.hhs.gov/definition-research-misconduct"
   },
@@ -210,7 +210,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Anversa's claims of cardiac stem cell regeneration collapsed after internal investigations found extensive data falsification across 31 papers and NIH grant filings.",
       "summary_cs": "Anversovy teorie o regeneraci srdce zkolabovaly poté, co vyšetřování prokázalo falšování dat ve 31 článcích a desítkách grantových zpráv.",
       "retractionWatchTag": "anversa-cardiac-stem-cells",
-      "url": "https://retractionwatch.com/category/by-author/piero-anversa/"
+      "url": "https://retractionwatch.com/?s=Piero+Anversa"
     },
     "standardUrl": "https://www.justice.gov/civil/false-claims-act"
   },
@@ -252,9 +252,9 @@ window.MISCONDUCT_DATA = [
       "summary": "Congressional investigations and federal audits have repeatedly halted high-risk pathogen research following unauthorized lab transfers and protocol evasions.",
       "summary_cs": "Kongresová vyšetřování a audity opakovaně zastavily rizikové virologické projekty kvůli neoprávněným manipulacím se vzorky antraxu a chřipky.",
       "retractionWatchTag": "biosecurity-durc-breaches",
-      "url": "https://retractionwatch.com/2021/10/21/nih-acknowledges-grant-funded-gain-of-function-research-in-wuhan/"
+      "url": "https://retractionwatch.com/?s=gain+of+function"
     },
-    "standardUrl": "https://www.phe.gov/s3/dualuse/Pages/default.aspx"
+    "standardUrl": "https://osp.od.nih.gov/biotechnology/dual-use-research-of-concern/"
   },
   {
     "id": "active-lab-sample-sabotage",
@@ -294,7 +294,7 @@ window.MISCONDUCT_DATA = [
       "summary": "A researcher was caught on hidden surveillance camera poisoning a colleague's cell culture bottles with ethanol and detergent. Sentenced to probation and ordered to pay restitution.",
       "summary_cs": "Vědec byl zachycen skrytou kamerou, jak otravuje média kolegyně ethanolem. Soud mu uložil podmíněný trest a povinnost uhradit škodu.",
       "retractionWatchTag": "laboratory-sabotage",
-      "url": "https://retractionwatch.com/2010/09/29/researcher-who-sabotaged-postdocs-experiments-sentenced-to-probation-ordered-to-pay-restitution/"
+      "url": "https://retractionwatch.com/?s=Vipul+Bhrigu"
     },
     "standardUrl": "https://www.law.cornell.edu/wex/criminal_mischief"
   },
@@ -336,9 +336,9 @@ window.MISCONDUCT_DATA = [
       "summary": "Publishers retracted over 11,000 papers and shut down 19 journals after uncovering coordinated paper mill operations selling authorship and manipulated peer reviews in special issues.",
       "summary_cs": "Vydavatelství stáhla přes 11 000 článků a zrušila 19 časopisů po odhalení koordinovaných sítí prodávajících autorství ve zvláštních číslech.",
       "retractionWatchTag": "paper-mills-hindawi",
-      "url": "https://retractionwatch.com/2023/12/06/wiley-to-stop-using-the-hindawi-name-after-18-million-revenue-decline/"
+      "url": "https://retractionwatch.com/?s=Hindawi+paper+mill"
     },
-    "standardUrl": "https://publicationethics.org/resources/flowcharts/systematic-manipulation-publication-process"
+    "standardUrl": "https://publicationethics.org/guidance/Guidelines"
   },
   {
     "id": "fake-peer-review-ring",
@@ -378,9 +378,9 @@ window.MISCONDUCT_DATA = [
       "summary": "Moon admitted to creating fake reviewer accounts with Yahoo and Gmail addresses to review his own manuscripts. Springer, Informa, and Elsevier retracted over 35 of his papers.",
       "summary_cs": "Moon přiznal zakládání falešných e-mailů, přes které recenzoval sám sebe. Vydavatelství Springer, Informa a Elsevier mu stáhla přes 35 publikací.",
       "retractionWatchTag": "fake-peer-review-ring",
-      "url": "https://retractionwatch.com/2012/08/24/author-created-fake-email-addresses-so-he-could-review-his-own-papers-leading-to-20-retractions/"
+      "url": "https://retractionwatch.com/?s=Hyung-In+Moon"
     },
-    "standardUrl": "https://publicationethics.org/resources/guidelines/cope-ethical-guidelines-peer-reviewers"
+    "standardUrl": "https://publicationethics.org/guidance/Guidelines"
   },
   {
     "id": "federal-grant-fund-embezzlement",
@@ -420,7 +420,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Multiple PIs across major universities have faced federal prison sentences and millions in restitution after federal audits uncovered bogus subcontracting and personal kickbacks.",
       "summary_cs": "Řada hlavních řešitelů na předních univerzitách byla odsouzena k odnětí svobody po odhalení fiktivních faktur a úplatků v grantech.",
       "retractionWatchTag": "grant-fraud-prosecution",
-      "url": "https://retractionwatch.com/2013/07/16/former-columbia-researcher-sentenced-to-two-months-in-prison-for-grant-fraud/"
+      "url": "https://retractionwatch.com/?s=grant+fraud"
     },
     "standardUrl": "https://anti-fraud.ec.europa.eu/"
   },
@@ -462,7 +462,7 @@ window.MISCONDUCT_DATA = [
       "summary": "The chief medical officer of MSKCC resigned after a ProPublica / NYT investigation revealed he failed to disclose millions in payments from pharma companies in dozens of articles in NEJM and Lancet.",
       "summary_cs": "Hlavní lékař prestižního centra MSKCC musel odstoupit poté, co investigativci odhalili nepřiznané miliony od farmaceutických firem v článcích v Lancetu.",
       "retractionWatchTag": "undisclosed-conflict-of-interest",
-      "url": "https://retractionwatch.com/2018/09/14/mskcc-chief-medical-officer-resigns-after-failures-to-disclose-ties-to-industry/"
+      "url": "https://retractionwatch.com/?s=Jose+Baselga"
     },
     "standardUrl": "https://www.icmje.org/disclosure-of-interest/"
   },
@@ -504,9 +504,9 @@ window.MISCONDUCT_DATA = [
       "summary": "ORI documented cases where senior scientists reviewed NIH R01 applications and directly copied hypotheses and methodologies into their own subsequent grant submissions and lab papers.",
       "summary_cs": "ORI opakovaně trestala případy, kdy hodnotitelé zkopírovali hypotézy z hodnocených žádostí NIH přímo do svých vlastních publikací.",
       "retractionWatchTag": "reviewer-misconduct-scooping",
-      "url": "https://retractionwatch.com/2017/01/24/peer-reviewer-stole-paper-retracted-published-another-journal/"
+      "url": "https://retractionwatch.com/2016/12/12/dear-peer-reviewer-stole-paper-authors-worst-nightmare/"
     },
-    "standardUrl": "https://grants.nih.gov/grants/policy/nihgps/HTML5/section_2/2.4.2_reviewer_confidentiality.htm"
+    "standardUrl": "https://grants.nih.gov/policy/peer/index.htm"
   },
   {
     "id": "severe-animal-welfare-protocol-breach",
@@ -546,7 +546,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Major research universities have faced six-figure federal fines and mandatory shutdowns of primate facilities following undercover documentation of unapproved surgical suffering.",
       "summary_cs": "Špičkové univerzity čelily milionovým pokutám a uzavření chovů primátů po zdokumentování neschválených operací bez umrtvení.",
       "retractionWatchTag": "animal-welfare-violations",
-      "url": "https://retractionwatch.com/category/by-reason/animal-welfare-issues/"
+      "url": "https://retractionwatch.com/?s=animal+welfare"
     },
     "standardUrl": "https://www.nal.usda.gov/animal-health-and-welfare/animal-welfare-act"
   },
@@ -630,9 +630,9 @@ window.MISCONDUCT_DATA = [
       "summary": "Independent audits repeatedly reveal severe retaliation against graduate students reporting data manipulation, leading to major university policy reforms and financial damages.",
       "summary_cs": "Nezávislé audity opakovaně prokázaly tvrdé msty vedoucích vůči doktorandům, kteří nahlásili falšování dat, což vedlo k reformám ochrany studentů.",
       "retractionWatchTag": "whistleblower-retaliation",
-      "url": "https://retractionwatch.com/2018/12/20/three-salk-scientists-settle-gender-discrimination-lawsuit/"
+      "url": "https://retractionwatch.com/?s=whistleblower"
     },
-    "standardUrl": "https://ori.hhs.gov/guidelines-protecting-whistleblowers"
+    "standardUrl": "https://ori.hhs.gov/"
   },
   {
     "id": "cv-credential-fabrication-grants",
@@ -672,7 +672,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Federal oversight bodies have formally debarred multiple PIs after automated cross-checks caught fabricated publication lists in R01 and career development grant filings.",
       "summary_cs": "Americký úřad ORI potrestal několik hlavních řešitelů za fiktivní články a falešné DOI kódy v žádostech o granty R01.",
       "retractionWatchTag": "grant-cv-fabrication",
-      "url": "https://retractionwatch.com/category/by-reason/falsification-of-data-or-records/"
+      "url": "https://ori.hhs.gov/case_summary"
     },
     "standardUrl": "https://ori.hhs.gov/case_summary"
   },
@@ -714,7 +714,7 @@ window.MISCONDUCT_DATA = [
       "summary": "The German Defense Minister and later the Education Minister were both stripped of their doctoral titles by the Universities of Bayreuth and Düsseldorf after VroniPlag crowd-sourced proof of massive plagiarism.",
       "summary_cs": "Německý ministr obrany a ministryně školství přišli o doktorské tituly po odhalení masivního plagiátorství platformou VroniPlag.",
       "retractionWatchTag": "vroniplag-dissertation-plagiarism",
-      "url": "https://retractionwatch.com/2013/02/06/german-education-minister-loses-phd-over-plagiarism/"
+      "url": "https://retractionwatch.com/?s=Guttenberg+plagiarism"
     },
     "standardUrl": "https://www.academicintegrity.org/"
   },
@@ -756,7 +756,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Legal discovery in class-action lawsuits revealed that over 50% of published trial reviews were ghostwritten by medical communication agencies hired by pharmaceutical companies.",
       "summary_cs": "Soudní spory odhalily, že více než polovina publikovaných přehledů byla sepsána najatými agenturami ve prospěch farmaceutických koncernů.",
       "retractionWatchTag": "ghostwriting-vioxx",
-      "url": "https://retractionwatch.com/category/by-reason/ghostwriting/"
+      "url": "https://retractionwatch.com/?s=ghostwriting"
     },
     "standardUrl": "https://www.ismpp.org/gpp-2022"
   },
@@ -798,7 +798,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Every year, Clarivate suppresses 20-30 prominent journals from the Journal Citation Reports due to extreme anomalous citation stacking and cartel behaviors.",
       "summary_cs": "Společnost Clarivate každoročně vyřazuje desítky časopisů z Web of Science kvůli masivnímu citačnímu kartelizování.",
       "retractionWatchTag": "citation-cartels-suppression",
-      "url": "https://retractionwatch.com/category/by-topic/citation-cartels/"
+      "url": "https://retractionwatch.com/?s=citation+cartel"
     },
     "standardUrl": "https://clarivate.com/products/scientific-and-academic-research/research-discovery-and-workflow-solutions/web-of-science/journal-citation-reports/"
   },
@@ -882,7 +882,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Cornell University found Wansink guilty of scientific misconduct for extensive p-hacking, data dredging, and dubious statistical methods across 18 retracted papers.",
       "summary_cs": "Cornellova univerzita shledala Wansinka vinným z vědeckého pochybení kvůli systematickému p-hackingu v 18 stažených článcích.",
       "retractionWatchTag": "brian-wansink-p-hacking",
-      "url": "https://retractionwatch.com/category/by-author/brian-wansink/"
+      "url": "https://retractionwatch.com/?s=Brian+Wansink"
     },
     "standardUrl": "https://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108"
   },
@@ -926,7 +926,7 @@ window.MISCONDUCT_DATA = [
       "retractionWatchTag": "hijacked-journals",
       "url": "https://retractionwatch.com/the-retraction-watch-hijacked-journal-checker/"
     },
-    "standardUrl": "https://publicationethics.org/resources/guidelines/principles-transparency-and-best-practice-scholarly-publishing"
+    "standardUrl": "https://publicationethics.org/guidance/Guidelines"
   },
   {
     "id": "unconsented-forged-coauthorship",
@@ -966,7 +966,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Journals frequently retract articles after famous researchers discover their names were added to papers they never saw or approved.",
       "summary_cs": "Vydavatelství pravidelně stahují články poté, co přední vědci zjistí, že byli bez vědomí zapsáni mezi autory.",
       "retractionWatchTag": "unauthorized-authorship",
-      "url": "https://retractionwatch.com/category/by-reason/unauthorized-authorship/"
+      "url": "https://retractionwatch.com/?s=unauthorized+authorship"
     },
     "standardUrl": "https://publicationethics.org/authorship"
   },
@@ -1008,9 +1008,9 @@ window.MISCONDUCT_DATA = [
       "summary": "Governments in the UK, Australia, and New Zealand have enacted criminal legislation banning commercial cheating services targeting university students.",
       "summary_cs": "Vlády ve Velké Británii a Austrálii uzákonily trestní postihy a blokace komerčních agentur nabízejících psaní prací studentům.",
       "retractionWatchTag": "contract-cheating",
-      "url": "https://retractionwatch.com/category/by-topic/paper-mills/"
+      "url": "https://retractionwatch.com/?s=contract+cheating"
     },
-    "standardUrl": "https://www.qaa.ac.uk/en/quality-code/contract-cheating"
+    "standardUrl": "https://www.academicintegrity.org/"
   },
   {
     "id": "tortured-phrases-ai-paraphrasing-fraud",
@@ -1050,9 +1050,9 @@ window.MISCONDUCT_DATA = [
       "summary": "Computer scientist Guillaume Cabanac identified tens of thousands of papers riddled with 'tortured phrases' produced by automated spinners to evade plagiarism detection.",
       "summary_cs": "Vědec Guillaume Cabanac odhalil desetitisíce prací plných zkomolených termínů vzniklých strojovým maskováním plagiátů.",
       "retractionWatchTag": "tortured-phrases",
-      "url": "https://retractionwatch.com/2021/08/09/how-tortured-phrases-became-a-telltale-sign-of-problematic-papers/"
+      "url": "https://retractionwatch.com/?s=tortured+phrases"
     },
-    "standardUrl": "https://publicationethics.org/resources/flowcharts/systematic-manipulation-publication-process"
+    "standardUrl": "https://publicationethics.org/guidance/Guidelines"
   },
   {
     "id": "substantial-self-plagiarism-salami",
@@ -1092,9 +1092,9 @@ window.MISCONDUCT_DATA = [
       "summary": "Journals routinely issue joint retractions when cross-checks reveal authors published the same experimental outcomes across multiple open-access venues.",
       "summary_cs": "Časopisy pravidelně vydávají společné retrakce, pokud odhalí publikování týchž klinických výsledků ve více periodicích.",
       "retractionWatchTag": "redundant-publication-salami",
-      "url": "https://retractionwatch.com/category/by-reason/duplication-of-article/"
+      "url": "https://retractionwatch.com/?s=duplicate+publication"
     },
-    "standardUrl": "https://publicationethics.org/resources/guidelines/redundant-publication"
+    "standardUrl": "https://publicationethics.org/guidance/Guidelines"
   },
   {
     "id": "unauthorized-exam-collusion-ring",
@@ -1134,7 +1134,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Universities launched disciplinary proceedings against scores of students after automated Canvas server log analyses revealed coordinated remote exam cheating rings.",
       "summary_cs": "Univerzity zahájily disciplinární řízení s desítkami studentů poté, co analýza logů v systému Canvas odhalila organizované podvádění při testech.",
       "retractionWatchTag": "exam-cheating-rings",
-      "url": "https://retractionwatch.com/category/by-topic/cheating/"
+      "url": "https://retractionwatch.com/?s=cheating"
     },
     "standardUrl": "https://www.academicintegrity.org/"
   },
@@ -1176,7 +1176,7 @@ window.MISCONDUCT_DATA = [
       "summary": "Molecular Brain documented that in over 40% of papers where raw blot data was requested following suspicious findings, authors chose to retract rather than supply raw files.",
       "summary_cs": "Časopis Molecular Brain doložil, že ve 40 % případů, kdy byla vyžádána surová data ke sporným gelům, autoři raději článek stáhli, než by data poskytli.",
       "retractionWatchTag": "data-availability-retractions",
-      "url": "https://retractionwatch.com/2020/02/11/in-a-first-journal-retracts-paper-for-failure-to-provide-raw-data/"
+      "url": "https://retractionwatch.com/?s=raw+data+retraction"
     },
     "standardUrl": "https://www.go-fair.org/fair-principles/"
   }
