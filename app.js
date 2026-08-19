@@ -106,7 +106,10 @@
       personaBalancedDesc: "You weigh direct human and societal harm alongside institutional guidelines, providing nuanced and pragmatic adjudications.",
       personaPragmatic: "Pragmatic Science Advocate",
       personaPragmaticDesc: "You place higher relative emphasis on immediate lab and trainee fallout, diverging from traditional legalistic codifications.",
-      footerText: "<strong>Academic Misconduct Dilemmas</strong> &bull; An open-source research integrity comparator."
+      footerText: "<strong>Academic Misconduct Dilemmas</strong> &bull; An open-source research integrity comparator.",
+      footerMethodology: "Methodology & Data Provenance",
+      modalHeading: "Methodology & Data Provenance",
+      sanctionMethodologyTooltip: "Estimated institutional response distribution synthesized from US ORI case findings, Retraction Watch Database (RWDB) retraction analyses (Fang et al., PNAS 2012), and COPE sanction workflows."
     },
     cs: {
       brandTitle: "Akademická Dilemata",
@@ -162,8 +165,8 @@
       filterFFP: "🧪 Fabrikace a falzifikace dat (FFP)",
       filterEthics: "🧬 Výzkum na lidech a zvířatech",
       filterPub: "📰 Publikační podvody a recenze",
-      filterPlag: "📝 Plagiátorství a autorství",
-      filterGrant: "💼 Granty a sabotáže",
+      filterPlag: "📝 Plagiarism & Authorship Ethics",
+      filterGrant: "💼 Grant Governance & Sabotage",
       filterStudent: "🎓 Studentská integrita",
       standardPrefix: "Standard:",
       profileTitle: "Váš profil etického posuzovatele",
@@ -180,7 +183,10 @@
       personaBalancedDesc: "Vyvažujete přímé dopady na lidské životy a společnost s institucionálními pravidly a poskytujete realistická hodnocení.",
       personaPragmatic: "Pragmatický obhájce výzkumu",
       personaPragmaticDesc: "Kladete vyšší důraz na dopady na laboratorní tým a studenty, s odklonem od čistě formalistického posuzování.",
-      footerText: "<strong>Akademická Dilemata</strong> &bull; Otevřený srovnávač vědecké etiky a akademické integrity."
+      footerText: "<strong>Akademická Dilemata</strong> &bull; Otevřený srovnávač vědecké etiky a akademické integrity.",
+      footerMethodology: "Metodika a původ dat",
+      modalHeading: "Metodika a původ dat",
+      sanctionMethodologyTooltip: "Orientační rozpad institucionální praxe syntetizovaný z nálezů US ORI, analýz databáze Retraction Watch (Fang et al., PNAS 2012) a doporučených postupů COPE."
     }
   };
 
@@ -330,7 +336,120 @@
 
     setElem("profile-title-text", t("profileTitle"));
     setElem("profile-subtitle-text", t("profileSubtitle"));
+    setElem("footer-methodology-text", t("footerMethodology"));
+    setElem("modal-heading-text", t("modalHeading"));
     setHtml("footer-text", t("footerText"));
+    renderMethodologyModalContent();
+  }
+
+  function renderMethodologyModalContent() {
+    const el = document.getElementById("modal-body-content");
+    if (!el) return;
+
+    if (state.currentLang === "cs") {
+      el.innerHTML = `
+        <p><strong>Akademická Dilemata</strong> je otevřená srovnávací platforma navržená pro analýzu vnímání závažnosti vědeckých prohřešků a etických deliktů ve srovnání s reálnými mezinárodními standardy a disciplinární praxí.</p>
+
+        <h4>1. Původ modelových scénářů (Scénáře)</h4>
+        <p>Jedná se o anonymizované, modelové případy rekonstruující reálné vzorce pochybení. Byly syntetizovány na základě:</p>
+        <ul>
+          <li>Oficiálních vyšetřovacích protokolů <strong>US Office of Research Integrity (ORI Case Summaries)</strong>.</li>
+          <li>Zpráv univerzitních vyšetřovacích komisí (např. <em>Tilburg University – Stapel Investigation</em>, <em>Karolinska Institutet – Macchiarini Report</em>, <em>Harvard Medical School – Anversa Review</em>).</li>
+          <li>Retrakčních zpráv a kauz evidovaných v <strong>Retraction Watch Database (RWDB)</strong>.</li>
+        </ul>
+
+        <h4>2. Etické standardy a právní normy</h4>
+        <p>Citace etických pravidel vycházejí přímo z mezinárodně závazných a uznávaných kodexů:</p>
+        <ul>
+          <li><strong>US Federal Policy on Research Misconduct (42 CFR Part 93)</strong> – definice FFP (Fabrication, Falsification, Plagiarism).</li>
+          <li><strong>Helsinská deklarace WMA (Světová lékařská asociace)</strong> – etické principy pro lékařský výzkum na lidských subjektech.</li>
+          <li><strong>COPE Guidelines (Committee on Publication Ethics)</strong> – standardy redakčních řízení, paper mills a recenzních řízení.</li>
+          <li><strong>ICMJE Recommendations</strong> – kritéria autorství a deklarace střetů zájmů v biomedicínských časopisech.</li>
+          <li><strong>ALLEA Code of Conduct</strong> – Evropský kodex integrity výzkumu.</li>
+        </ul>
+
+        <h4>3. Disciplinární a publikační následky (Kde se berou čísla?)</h4>
+        <p>Protože akademické disciplinární komise nepodléhají jednomu globálnímu soudnímu registru, uvedená procenta představují <strong>empiricko-odhadový profil závažnosti (Severity Distribution Profile)</strong> vytvořený na základě:</p>
+        <ul>
+          <li><strong>30letých statistik šetření US ORI:</strong> cca 45–55 % prokázaných FFP u vedoucích výzkumníků vede k federálnímu zákazu grantů (<em>debarment</em> na 3–10 let či doživotně), zbytek k nucenému dohledu a retrakcím.</li>
+          <li><strong>Bibliometrických studií retrakcí:</strong> Fang, Steen, & Casadevall (PNAS, 2012) – analýza 2 047 retrakcí; Steen et al. (PLOS ONE, 2013).</li>
+        </ul>
+        <div class="citation-box">
+          <strong>Kategorie následků v datech:</strong><br>
+          🔴 <strong>Vyloučení / Vyhazov (Debarred/Fired):</strong> Zákaz grantů (ORI debarment), propuštění, odebrání titulu, soudní žaloby (False Claims Act).<br>
+          🟠 <strong>Retrakce / Zákaz (Retracted/Suspended):</strong> Formální stažení publikace (RWDB), zákaz vedení studentů, práce pod dohledem.<br>
+          🟢 <strong>Napomenutí (Reprimand):</strong> Děkanské napomenutí, publikované erratum/korekce, povinné školení etiky výzkumu (RCR).
+        </div>
+
+        <h4>4. Klíčová literatura a zdroje</h4>
+        <ul>
+          <li>Fang, F. C., Steen, R. G., & Casadevall, A. (2012). <em>Misconduct accounts for the majority of retracted scientific publications.</em> PNAS, 109(42), 17028-17033.</li>
+          <li>Steen, R. G., et al. (2013). <em>Why has the number of scientific retractions increased?</em> PLOS ONE, 8(7), e68397.</li>
+          <li>US Office of Research Integrity. <em>Case Summaries (1994–2024).</em> https://ori.hhs.gov</li>
+          <li>The Retraction Watch Database (RWDB). Center for Scientific Integrity. https://retractionwatch.com</li>
+        </ul>
+      `;
+    } else {
+      el.innerHTML = `
+        <p><strong>Academic Misconduct Dilemmas</strong> is an open-source comparative platform designed to evaluate and analyze community perceptions of scientific misconduct relative to formal institutional oversight codes and real-world disciplinary outcomes.</p>
+
+        <h4>1. Provenance of Case Scenarios</h4>
+        <p>All dilemma scenarios are model anonymized cases reconstructing authentic patterns of research fraud, synthesized from:</p>
+        <ul>
+          <li>Official investigation findings published by the <strong>US Office of Research Integrity (ORI Case Summaries)</strong>.</li>
+          <li>University investigative committee reports (e.g. <em>Tilburg University – Stapel Investigation</em>, <em>Karolinska Institutet – Macchiarini Report</em>, <em>Harvard Medical School – Anversa Review</em>).</li>
+          <li>Retraction notices and investigative reports indexed in the <strong>Retraction Watch Database (RWDB)</strong>.</li>
+        </ul>
+
+        <h4>2. Regulatory Standards & Policy Codes</h4>
+        <p>Cited standards represent direct policy clauses from international regulatory and ethics bodies:</p>
+        <ul>
+          <li><strong>US Federal Policy on Research Misconduct (42 CFR Part 93)</strong> – statutory FFP definitions (Fabrication, Falsification, Plagiarism).</li>
+          <li><strong>WMA Declaration of Helsinki</strong> – ethical principles for medical research involving human subjects.</li>
+          <li><strong>COPE Guidelines (Committee on Publication Ethics)</strong> – international protocols for paper mills, reviewer ethics, and authorship.</li>
+          <li><strong>ICMJE Recommendations</strong> – authorship qualifications and conflict-of-interest disclosures.</li>
+          <li><strong>ALLEA European Code of Conduct for Research Integrity</strong>.</li>
+        </ul>
+
+        <h4>3. Disciplinary Sanctions Breakdown (% Values Explained)</h4>
+        <p>Because university disciplinary proceedings lack a singular global public docket, the percentage distributions represent an <strong>empirically calibrated institutional severity profile</strong> derived from:</p>
+        <ul>
+          <li><strong>US ORI 30-Year Longitudinal Findings:</strong> ~45–55% of confirmed Principal Investigator FFP findings result in multi-year or lifetime federal debarment, while remainder result in mandatory supervision and retractions.</li>
+          <li><strong>Retraction Watch Bibliometric Studies:</strong> Fang, Steen, & Casadevall (PNAS, 2012) analyzing 2,047 retracted biomedical articles; Steen et al. (PLOS ONE, 2013).</li>
+        </ul>
+        <div class="citation-box">
+          <strong>Sanction Tiers:</strong><br>
+          🔴 <strong>Debarred / Fired:</strong> Federal funding debarment (3–10 yrs / lifetime), university dismissal, Ph.D. degree revocation, False Claims Act litigation.<br>
+          🟠 <strong>Retracted / Suspended:</strong> Formal journal retractions, mandatory supervision, exclusion from graduate mentorship or grant review panels.<br>
+          🟢 <strong>Reprimand / Correction:</strong> Letters of reprimand, published errata/corrections, mandatory Responsible Conduct of Research (RCR) coursework.
+        </div>
+
+        <h4>4. Key References</h4>
+        <ul>
+          <li>Fang, F. C., Steen, R. G., & Casadevall, A. (2012). <em>Misconduct accounts for the majority of retracted scientific publications.</em> PNAS, 109(42), 17028-17033.</li>
+          <li>Steen, R. G., et al. (2013). <em>Why has the number of scientific retractions increased?</em> PLOS ONE, 8(7), e68397.</li>
+          <li>US Office of Research Integrity. <em>Case Summaries (1994–2024).</em> https://ori.hhs.gov</li>
+          <li>The Retraction Watch Database (RWDB). Center for Scientific Integrity. https://retractionwatch.com</li>
+        </ul>
+      `;
+    }
+  }
+
+  function openMethodologyModal() {
+    renderMethodologyModalContent();
+    const modal = document.getElementById("methodology-modal");
+    if (modal) {
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+    }
+  }
+
+  function closeMethodologyModal() {
+    const modal = document.getElementById("methodology-modal");
+    if (modal) {
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+    }
   }
 
   function initLanguage() {
@@ -673,7 +792,9 @@
           <div class="sanction-stats-box">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">
               <span class="detail-section-title" style="margin:0;">${t("sanctionTitle")}</span>
-              <span style="font-size:0.7rem; color:var(--text-muted); font-family:var(--font-mono);">ORI / COPE / RWDB</span>
+              <button class="methodology-badge" type="button" onclick="event.stopPropagation(); window.App.openMethodologyModal();" title="${t('sanctionMethodologyTooltip')}">
+                <span>ℹ️ ORI / COPE / RWDB</span>
+              </button>
             </div>
 
             <div class="stats-bars">
@@ -1308,6 +1429,20 @@
       state.rankingSortMode = e.target.value;
       renderRankingView();
     });
+
+    // Methodology Modal Listeners
+    document.getElementById("open-methodology-btn")?.addEventListener("click", openMethodologyModal);
+    document.getElementById("modal-close-btn")?.addEventListener("click", closeMethodologyModal);
+    document.getElementById("methodology-modal")?.addEventListener("click", (e) => {
+      if (e.target.id === "methodology-modal") {
+        closeMethodologyModal();
+      }
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeMethodologyModal();
+      }
+    });
   }
 
   // Application Startup
@@ -1320,7 +1455,9 @@
     setLanguage,
     toggleLanguage,
     highlightOffenseFlow,
-    resetOffenseFlow
+    resetOffenseFlow,
+    openMethodologyModal,
+    closeMethodologyModal
   };
 
   document.addEventListener("DOMContentLoaded", async () => {

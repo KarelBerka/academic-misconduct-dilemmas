@@ -210,6 +210,10 @@
         <strong>Academic Misconduct Dilemmas</strong> &bull; An open-source research integrity comparator.
       </div>
       <div class="footer-links">
+        <button id="open-methodology-btn" class="footer-methodology-btn" type="button">
+          <span>ℹ️</span>
+          <span id="footer-methodology-text">Methodology & Data Provenance</span>
+        </button>
         <a href="https://retractionwatch.com" target="_blank" rel="noopener">Retraction Watch</a>
         <a href="https://ori.hhs.gov" target="_blank" rel="noopener">US ORI</a>
         <a href="https://publicationethics.org" target="_blank" rel="noopener">COPE</a>
@@ -219,6 +223,22 @@
       </div>
     </div>
   </footer>
+
+  <!-- Methodology & Data Provenance Modal Dialog -->
+  <div class="modal-overlay" id="methodology-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title-text">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-title-text">
+          <span>ℹ️</span>
+          <span id="modal-heading-text">Methodology & Data Provenance</span>
+        </div>
+        <button class="modal-close-btn" id="modal-close-btn" type="button" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body-content">
+        <!-- Rendered dynamically by app.js based on active language -->
+      </div>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script src="config.js"></script>
