@@ -1237,10 +1237,16 @@
     `;
 
     svgContainer.innerHTML = svgHtml;
+    currentHighlightedFlowId = "init";
     resetCrimeFlow();
   }
 
+  let currentHighlightedFlowId = null;
+
   function highlightCrimeFlow(crimeId) {
+    if (currentHighlightedFlowId === crimeId) return;
+    currentHighlightedFlowId = crimeId;
+
     const groups = document.querySelectorAll(".flow-crime-group");
     const item = window.MISCONDUCT_DATA.find(c => c.id === crimeId);
     if (!item) return;
@@ -1295,13 +1301,23 @@
       const itemCat = getField(item, "categoryLabel");
 
       tooltipBox.innerHTML = `
-        <span>🔎 <strong>${itemName}</strong> (${itemCat}) &bull; 👥 1. ${labelWho}: <strong>#${pRank} (${score.elo} Elo)</strong> &bull; ⚖️ 2. ${t("col2Header")}: <strong>#${lRank} (${item.harmAnalysis.harmScore}/100)</strong> &bull; 🛑 3. ${t("col3Header")}: <strong>#${cRank} (${item.sanctionStats.severeSanctionsPct}% ${t("debarredLabel").toLowerCase()})</strong></span>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.4rem 0.8rem; width:100%;">
+          <span>🔎 <strong>${itemName}</strong> <small style="color:var(--text-muted);">(${itemCat})</small></span>
+          <span style="display:inline-flex; gap:0.6rem; flex-wrap:wrap; align-items:center;">
+            <span style="color:#38bdf8; font-weight:600;">👥 #${pRank} (${score.elo} Elo)</span>
+            <span style="color:#fbbf24; font-weight:600;">⚖️ #${lRank} (${item.harmAnalysis.harmScore}/100)</span>
+            <span style="color:#34d399; font-weight:600;">🛑 #${cRank} (${item.sanctionStats.severeSanctionsPct}% ${t("debarredLabel").toLowerCase()})</span>
+          </span>
+        </div>
       `;
       tooltipBox.style.borderColor = "var(--accent-primary)";
     }
   }
 
   function resetCrimeFlow() {
+    if (currentHighlightedFlowId === null) return;
+    currentHighlightedFlowId = null;
+
     const groups = document.querySelectorAll(".flow-crime-group");
     groups.forEach(g => {
       g.classList.remove("flow-highlighted", "flow-dimmed");

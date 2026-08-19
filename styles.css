@@ -865,16 +865,24 @@ body {
   background: var(--bg-surface);
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-md);
-  padding: 0.75rem 1.25rem;
+  padding: 0.65rem 1.1rem;
   margin-bottom: 1rem;
-  font-size: 0.88rem;
-  min-height: 44px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  min-height: 56px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
   color: var(--text-secondary);
+  contain: layout;
+}
+
+@media (max-width: 900px) {
+  .flow-interactive-legend {
+    min-height: 76px;
+    font-size: 0.8rem;
+  }
 }
 
 /* Insights Cards (Paradoxes & Consensus) */
@@ -939,16 +947,19 @@ body {
 .flow-path {
   fill: none;
   stroke-linecap: round;
-  transition: stroke-width 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+  transition: stroke-width 0.15s ease, opacity 0.15s ease, filter 0.15s ease;
   cursor: pointer;
+  pointer-events: stroke;
 }
 
 .flow-node-group {
   cursor: pointer;
+  pointer-events: bounding-box;
 }
 
 .flow-node-circle {
-  transition: r 0.2s ease, stroke-width 0.2s ease;
+  transition: r 0.15s ease, stroke-width 0.15s ease;
+  pointer-events: all;
 }
 
 .flow-node-group:hover text {
@@ -956,7 +967,8 @@ body {
 }
 
 .flow-crime-group {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
+  pointer-events: all;
 }
 
 .flow-crime-group.flow-dimmed {
