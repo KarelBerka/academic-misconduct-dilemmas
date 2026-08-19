@@ -139,7 +139,7 @@
           <button class="toggle-btn" id="toggle-view-list">📋 Standard List</button>
         </div>
 
-        <div style="display:flex; align-items:center; gap:0.5rem;">
+        <div id="ranking-sort-wrap" style="display:none; align-items:center; gap:0.5rem;">
           <label for="sort-mode-select" id="rank-by-label" style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Rank by:</label>
           <select id="sort-mode-select" class="catalog-input" style="padding:0.4rem 0.8rem; font-size:0.85rem; width:auto;">
             <option value="globalPublic">🌐 Community Opinion (Global Elo)</option>
@@ -150,8 +150,36 @@
         </div>
       </div>
 
-      <div id="rankings-container">
-        <!-- Rendered dynamically by app.js -->
+      <!-- Flow Perspective Toggle -->
+      <div class="flow-perspective-toggle" id="flow-persp-toggle-group">
+        <button class="flow-perspective-btn active" data-perspective="public" id="btn-flow-persp-public">
+          <span id="persp-public-text">👥 Column 1: Community Consensus (Global Supabase Elo)</span>
+        </button>
+        <button class="flow-perspective-btn" data-perspective="user" id="btn-flow-persp-user">
+          <span id="persp-user-text">👤 Column 1: Your Personal Choices (Local Session)</span>
+        </button>
+      </div>
+
+      <!-- Live Hover Legend / Tooltip -->
+      <div id="flow-hover-tooltip-box" class="flow-interactive-legend">
+        <span id="flow-legend-default-text">💡 Hover over any offense or line to highlight its path across all 3 ranking systems.</span>
+      </div>
+
+      <!-- Insights Cards (Ethical Paradoxes & Consensus) -->
+      <div class="insights-summary-grid" id="ranking-insights-container">
+        <!-- Dynamically rendered insights -->
+      </div>
+
+      <!-- Flow Diagram SVG Container -->
+      <div class="flow-svg-scroll-container" id="flow-svg-outer-container">
+        <div id="ranking-flow-svg-container">
+          <!-- Dynamically rendered SVG Flow Graph -->
+        </div>
+      </div>
+
+      <!-- Standard List Container -->
+      <div id="ranking-list-container" class="rankings-list" style="display: none;">
+        <!-- Dynamically rendered list items -->
       </div>
     </section>
 

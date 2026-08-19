@@ -820,63 +820,166 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
-/* SVG Flow diagram */
-.flow-diagram-wrapper {
+/* Flow Perspective Toggle */
+.flow-perspective-toggle {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.flow-perspective-btn {
+  flex: 1;
+  min-width: 240px;
+  padding: 0.65rem 1rem;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  overflow-x: auto;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.flow-perspective-btn:hover {
+  background: var(--bg-surface-raised);
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.flow-perspective-btn.active {
+  background: var(--bg-surface-raised);
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+}
+
+/* Interactive Hover Legend / Tooltip Bar */
+.flow-interactive-legend {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+  color: var(--text-secondary);
+}
+
+/* Insights Cards (Paradoxes & Consensus) */
+.insights-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.insight-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
   box-shadow: var(--shadow-sm);
 }
 
-.flow-link {
-  transition: stroke-width 0.2s ease, opacity 0.2s ease, stroke 0.2s ease;
+.insight-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.insight-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.insight-card-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* SVG Flow diagram canvas */
+.flow-svg-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.flow-svg-canvas {
+  width: 100%;
+  min-width: 960px;
+  height: auto;
+  display: block;
+}
+
+.flow-path {
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-width 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
   cursor: pointer;
 }
 
-.flow-node {
+.flow-node-group {
+  cursor: pointer;
+}
+
+.flow-node-circle {
+  transition: r 0.2s ease, stroke-width 0.2s ease;
+}
+
+.flow-node-group:hover text {
+  font-weight: 800;
+}
+
+.flow-crime-group {
   transition: opacity 0.2s ease;
-  cursor: pointer;
 }
 
-.flow-node rect {
-  transition: stroke 0.2s ease, stroke-width 0.2s ease, fill 0.2s ease, filter 0.2s ease;
+.flow-crime-group.flow-dimmed {
+  opacity: 0.1 !important;
 }
 
-.flow-node text {
-  transition: fill 0.2s ease, font-weight 0.2s ease;
+.flow-crime-group.flow-highlighted {
+  opacity: 1.0 !important;
 }
 
-.flow-node-highlighted {
+.flow-crime-group.flow-highlighted .flow-path {
+  stroke-width: 4.8px !important;
   opacity: 1 !important;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.75));
 }
 
-.flow-node-highlighted rect {
-  stroke: var(--accent-primary) !important;
-  stroke-width: 2px !important;
-  fill: var(--bg-surface-raised) !important;
-  filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.45)) !important;
+.flow-crime-group.flow-highlighted .flow-node-circle {
+  r: 7px !important;
+  stroke-width: 2.5px !important;
 }
 
-.flow-node-highlighted text {
-  fill: var(--accent-primary) !important;
-  font-weight: 700 !important;
-}
-
-.flow-node-dimmed {
-  opacity: 0.25 !important;
-}
-
-.flow-link-highlighted {
-  stroke-width: 4.5px !important;
-  opacity: 1 !important;
-  stroke: #38bdf8 !important;
-  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6)) !important;
-}
-
-.flow-link-dimmed {
-  opacity: 0.08 !important;
+.flow-crime-group.flow-highlighted text {
+  font-weight: 800 !important;
 }
 
 /* Rankings list */

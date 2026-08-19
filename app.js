@@ -109,7 +109,22 @@
       footerText: "<strong>Academic Misconduct Dilemmas</strong> &bull; An open-source research integrity comparator.",
       footerMethodology: "Methodology & Data Provenance",
       modalHeading: "Methodology & Data Provenance",
-      sanctionMethodologyTooltip: "Estimated institutional response distribution synthesized from US ORI case findings, Retraction Watch Database (RWDB) retraction analyses (Fang et al., PNAS 2012), and COPE sanction workflows."
+      sanctionMethodologyTooltip: "Estimated institutional response distribution synthesized from US ORI case findings, Retraction Watch Database (RWDB) retraction analyses (Fang et al., PNAS 2012), and COPE sanction workflows.",
+      perspPublicBtn: "👥 Column 1: Community Consensus (Global Supabase Elo)",
+      perspUserBtn: "👤 Column 1: Your Personal Choices (Local Session)",
+      flowLegendDefault: "💡 Hover over any offense or line to highlight its path across all 3 ranking systems.",
+      insightStricterPublicHeader: (who) => `${who} Stricter Than Policy Codes`,
+      insightStricterLawHeader: (who) => `Policy Stricter Than ${who}`,
+      insightConsensusHeader: "Highest Multi-System Consensus",
+      insightStricterPublicDesc: (who, name, pRank, lRank, delta) => `${who} rank this offense at <strong>#${pRank}</strong>, whereas policy benchmarks rate it at <strong>#${lRank}</strong> (+${delta} ranks stricter).`,
+      insightStricterLawDesc: (who, name, pRank, lRank, delta) => `Institutional codes assign high severity at <strong>#${lRank}</strong>, while ${who.toLowerCase()} consider it at <strong>#${pRank}</strong> (${delta} ranks milder).`,
+      insightConsensusDesc: (name, pRank, lRank, cRank) => `High alignment: <strong>#${pRank} in community/user rating</strong>, <strong>#${lRank} in policy harm</strong>, and <strong>#${cRank} in real sanctions</strong>.`,
+      flowHeaderCol1: (isUser) => isUser ? "👤 1. Your Judgements" : "👥 1. Community Voting",
+      flowHeaderCol1Sub: (isUser, duels, global) => isUser ? `${duels} duels evaluated (this session)` : `Total ${global} duels (Supabase Elo)`,
+      flowHeaderCol2: "⚖️ 2. Institutional Standards (ORI/COPE)",
+      flowHeaderCol2Sub: "US ORI 42 CFR / COPE Codes ↗",
+      flowHeaderCol3: "🛑 3. Disciplinary Sanction Rate",
+      flowHeaderCol3Sub: "Retraction Watch DB / Case Findings ↗"
     },
     cs: {
       brandTitle: "Akademická Dilemata",
@@ -186,7 +201,22 @@
       footerText: "<strong>Akademická Dilemata</strong> &bull; Otevřený srovnávač vědecké etiky a akademické integrity.",
       footerMethodology: "Metodika a původ dat",
       modalHeading: "Metodika a původ dat",
-      sanctionMethodologyTooltip: "Orientační rozpad institucionální praxe syntetizovaný z nálezů US ORI, analýz databáze Retraction Watch (Fang et al., PNAS 2012) a doporučených postupů COPE."
+      sanctionMethodologyTooltip: "Orientační rozpad institucionální praxe syntetizovaný z nálezů US ORI, analýz databáze Retraction Watch (Fang et al., PNAS 2012) a doporučených postupů COPE.",
+      perspPublicBtn: "👥 Sloupec 1: Veřejnost (Globální data ze Supabase)",
+      perspUserBtn: "👤 Sloupec 1: Vaše hlasy (Lokální hra)",
+      flowLegendDefault: "💡 Najeďte kurzorem na delikt nebo linii pro zvýraznění jeho toku napříč všemi 3 žebříčky.",
+      insightStricterPublicHeader: (who) => `${who} přísnější než etické standardy`,
+      insightStricterLawHeader: (who) => `Standardy přísnější než ${who.toLowerCase()}`,
+      insightConsensusHeader: "Nejvyšší vzájemná shoda",
+      insightStricterPublicDesc: (who, name, pRank, lRank, delta) => `${who} tento delikt řadí na <strong>#${pRank}. místo</strong>, zatímco etické kodexy až na <strong>#${lRank}. místo</strong> (posun o +${delta} pozic přísněji).`,
+      insightStricterLawDesc: (who, name, pRank, lRank, delta) => `Etické standardy stanovují vysokou závažnost na <strong>#${lRank}. místě</strong>, avšak ${who.toLowerCase()} čin vnímají na <strong>#${pRank}. místě</strong> (o ${delta} příček mírněji).`,
+      insightConsensusDesc: (name, pRank, lRank, cRank) => `Vysoká shoda: <strong>#${pRank}. u lidí/vás</strong>, <strong>#${lRank}. v etických standardech</strong> a <strong>#${cRank}. v reálných sankcích</strong>.`,
+      flowHeaderCol1: (isUser) => isUser ? "👤 1. Vaše hodnocení" : "👥 1. Hlasování komunity",
+      flowHeaderCol1Sub: (isUser, duels, global) => isUser ? `Odehráno ${duels} duelů (tato hra)` : `Celkem ${global} duelů (Supabase Elo)`,
+      flowHeaderCol2: "⚖️ 2. Etické standardy ORI / COPE",
+      flowHeaderCol2Sub: "US ORI 42 CFR / COPE kodexy ↗",
+      flowHeaderCol3: "🛑 3. Reálné disciplinární postihy",
+      flowHeaderCol3Sub: "Retraction Watch DB / Šetření ↗"
     }
   };
 
@@ -325,6 +355,10 @@
     setElem("catalog-subtitle-text", t("catalogSubtitle"));
     const searchInput = document.getElementById("catalog-search-input");
     if (searchInput) searchInput.setAttribute("placeholder", t("searchPlaceholder"));
+
+    setElem("persp-public-text", t("perspPublicBtn"));
+    setElem("persp-user-text", t("perspUserBtn"));
+    setElem("flow-legend-default-text", t("flowLegendDefault"));
 
     setElem("filter-all-btn", t("filterAll"));
     setElem("filter-ffp-btn", t("filterFFP"));
@@ -977,19 +1011,321 @@
   }
 
   // =========================================================================
-  // VIEW 2: RANKINGS & FLOW
+  // VIEW 2: RANKINGS & FLOW BUMP CHART
   // =========================================================================
 
   function renderRankingView() {
+    const flowWrapper = document.getElementById("ranking-flow-wrapper");
+    const listContainer = document.getElementById("ranking-list-container");
+    const sortWrap = document.getElementById("ranking-sort-wrap");
+
     if (state.rankingViewMode === "flow") {
-      renderFlowView();
+      if (flowWrapper) flowWrapper.style.display = "block";
+      if (listContainer) listContainer.style.display = "none";
+      if (sortWrap) sortWrap.style.display = "none";
+      renderFlowBumpChart();
     } else {
+      if (flowWrapper) flowWrapper.style.display = "none";
+      if (listContainer) listContainer.style.display = "flex";
+      if (sortWrap) sortWrap.style.display = "flex";
       renderListView();
     }
   }
 
+  function renderFlowBumpChart() {
+    const svgContainer = document.getElementById("ranking-flow-svg-container");
+    const insightsContainer = document.getElementById("ranking-insights-container");
+    if (!svgContainer || !insightsContainer) return;
+
+    const data = [...window.MISCONDUCT_DATA];
+    const totalItems = data.length;
+    const isUserPersp = state.flowFirstColumnMode === "user";
+
+    // 1. Column 1 sorted: User Elo or Global Supabase Elo
+    const firstColSorted = [...data].sort((a, b) => {
+      const eloA = isUserPersp ? getUserScore(a.id).elo : getGlobalScore(a.id).elo;
+      const eloB = isUserPersp ? getUserScore(b.id).elo : getGlobalScore(b.id).elo;
+      return eloB - eloA;
+    });
+    const firstColRanks = {};
+    firstColSorted.forEach((item, idx) => { firstColRanks[item.id] = idx + 1; });
+
+    // 2. Column 2 sorted: Policy Benchmark (ORI / COPE Harm Index)
+    const policySorted = [...data].sort((a, b) => b.harmAnalysis.harmScore - a.harmAnalysis.harmScore);
+    const policyRanks = {};
+    policySorted.forEach((item, idx) => { policyRanks[item.id] = idx + 1; });
+
+    // 3. Column 3 sorted: Real Disciplinary Sanctions Rate (% Debarred / Fired)
+    const sanctionsSorted = [...data].sort((a, b) => b.sanctionStats.severeSanctionsPct - a.sanctionStats.severeSanctionsPct);
+    const sanctionsRanks = {};
+    sanctionsSorted.forEach((item, idx) => { sanctionsRanks[item.id] = idx + 1; });
+
+    // Sestavení srovnávacího seznamu
+    const comparisonList = [...data].map(item => {
+      const pRank = firstColRanks[item.id];
+      const lRank = policyRanks[item.id];
+      const cRank = sanctionsRanks[item.id];
+      const delta = lRank - pRank; // Kladné = 1. sloupec trestá přísněji než kodexy/standardy
+      return { item, pRank, lRank, cRank, delta };
+    });
+
+    // Insight Cards (Paradoxy)
+    const maxStricterPublic = [...comparisonList].sort((a, b) => b.delta - a.delta)[0];
+    const maxStricterLaw = [...comparisonList].sort((a, b) => a.delta - b.delta)[0];
+    const bestConsensus = [...comparisonList].sort((a, b) => Math.abs(a.delta) - Math.abs(b.delta))[0];
+
+    const labelWho = isUserPersp ? (state.currentLang === "cs" ? "Vy" : "You") : (state.currentLang === "cs" ? "Veřejnost" : "Community");
+    const labelWho2 = isUserPersp ? (state.currentLang === "cs" ? "Váš výběr" : "Your choices") : (state.currentLang === "cs" ? "Lidé" : "People");
+
+    insightsContainer.innerHTML = `
+      <div class="insight-card" style="border-left: 4px solid #f43f5e;">
+        <div class="insight-card-header" style="color: #f43f5e;">
+          <span>🚨 ${t("insightStricterPublicHeader", labelWho)}</span>
+        </div>
+        <div class="insight-card-title">${getField(maxStricterPublic.item, "name")}</div>
+        <div class="insight-card-desc">
+          ${t("insightStricterPublicDesc", labelWho2, getField(maxStricterPublic.item, "name"), maxStricterPublic.pRank, maxStricterPublic.lRank, maxStricterPublic.delta)}
+        </div>
+      </div>
+
+      <div class="insight-card" style="border-left: 4px solid #38bdf8;">
+        <div class="insight-card-header" style="color: #38bdf8;">
+          <span>🏛️ ${t("insightStricterLawHeader", labelWho)}</span>
+        </div>
+        <div class="insight-card-title">${getField(maxStricterLaw.item, "name")}</div>
+        <div class="insight-card-desc">
+          ${t("insightStricterLawDesc", labelWho2, getField(maxStricterLaw.item, "name"), maxStricterLaw.pRank, maxStricterLaw.lRank, Math.abs(maxStricterLaw.delta))}
+        </div>
+      </div>
+
+      <div class="insight-card" style="border-left: 4px solid #34d399;">
+        <div class="insight-card-header" style="color: #34d399;">
+          <span>⚖️ ${t("insightConsensusHeader")}</span>
+        </div>
+        <div class="insight-card-title">${getField(bestConsensus.item, "name")}</div>
+        <div class="insight-card-desc">
+          ${t("insightConsensusDesc", getField(bestConsensus.item, "name"), bestConsensus.pRank, bestConsensus.lRank, bestConsensus.cRank)}
+        </div>
+      </div>
+    `;
+
+    // Rozměry pro SVG graf
+    const rowH = 38;
+    const topPadding = 105;
+    const svgWidth = 1140;
+    const svgHeight = topPadding + (totalItems * rowH) + 30;
+
+    const xP_text = 240;
+    const xP_dot = 260;
+    const xL_dotIn = 410;
+    const xL_text = 550;
+    const xL_dotOut = 690;
+    const xC_dot = 840;
+    const xC_text = 860;
+
+    const categoryColors = {
+      FFP: "#f43f5e",
+      ResearchEthics: "#c084fc",
+      PublicationFraud: "#38bdf8",
+      PlagiarismAuthorship: "#34d399",
+      GrantGovernance: "#facc15",
+      StudentIntegrity: "#fb923c"
+    };
+
+    function getColor(item) {
+      return categoryColors[item.category] || "#38bdf8";
+    }
+
+    const firstColTitle = isUserPersp ? t("flowHeaderCol1", true) : t("flowHeaderCol1", false);
+    const firstColSub = isUserPersp 
+      ? t("flowHeaderCol1Sub", true, state.totalDilemmasAnswered, 0) 
+      : t("flowHeaderCol1Sub", false, 0, state.totalGlobalVotes);
+
+    let svgHtml = `
+      <svg class="flow-svg-canvas" viewBox="0 0 ${svgWidth} ${svgHeight}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- Sloupcové hlavičky s vysvětlivkami a odkazy -->
+        <g class="flow-headers">
+          <!-- 1. Veřejnost / Vaše hlasy -->
+          <rect x="20" y="15" width="300" height="58" rx="8" fill="var(--bg-surface-raised)" stroke="var(--border-medium)" stroke-width="1"/>
+          <text x="170" y="37" fill="#38bdf8" font-size="14" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">${firstColTitle}</text>
+          <text x="170" y="58" fill="var(--text-secondary)" font-size="12" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif">${firstColSub}</text>
+
+          <!-- 2. Etické standardy & Harm Index -->
+          <a xlink:href="https://ori.hhs.gov/definition-research-misconduct" target="_blank">
+            <rect x="390" y="15" width="320" height="58" rx="8" fill="var(--bg-surface-raised)" stroke="var(--border-medium)" stroke-width="1" style="cursor:pointer;"/>
+            <text x="550" y="37" fill="#fbbf24" font-size="14" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif" style="cursor:pointer;">${t("flowHeaderCol2")}</text>
+            <text x="550" y="58" fill="#facc15" font-size="12" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif" style="text-decoration:underline; cursor:pointer;">${t("flowHeaderCol2Sub")}</text>
+          </a>
+
+          <!-- 3. Reálné sankce & Retrakce -->
+          <a xlink:href="https://retractionwatch.com" target="_blank">
+            <rect x="780" y="15" width="340" height="58" rx="8" fill="var(--bg-surface-raised)" stroke="var(--border-medium)" stroke-width="1" style="cursor:pointer;"/>
+            <text x="950" y="37" fill="#34d399" font-size="14" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif" style="cursor:pointer;">${t("flowHeaderCol3")}</text>
+            <text x="950" y="58" fill="#34d399" font-size="12" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif" style="text-decoration:underline; cursor:pointer;">${t("flowHeaderCol3Sub")}</text>
+          </a>
+        </g>
+
+        <!-- Vodící vertikální čáry pro přehlednost -->
+        <line x1="${xP_dot}" y1="${topPadding - 10}" x2="${xP_dot}" y2="${svgHeight - 20}" stroke="var(--border-medium)" stroke-dasharray="3 3" opacity="0.35"/>
+        <line x1="${xL_dotIn}" y1="${topPadding - 10}" x2="${xL_dotIn}" y2="${svgHeight - 20}" stroke="var(--border-medium)" stroke-dasharray="3 3" opacity="0.35"/>
+        <line x1="${xL_dotOut}" y1="${topPadding - 10}" x2="${xL_dotOut}" y2="${svgHeight - 20}" stroke="var(--border-medium)" stroke-dasharray="3 3" opacity="0.35"/>
+        <line x1="${xC_dot}" y1="${topPadding - 10}" x2="${xC_dot}" y2="${svgHeight - 20}" stroke="var(--border-medium)" stroke-dasharray="3 3" opacity="0.35"/>
+
+        <!-- Flow křivky a skupiny deliktů -->
+        <g id="flow-groups-container">
+    `;
+
+    comparisonList.forEach(cItem => {
+      const { item, pRank, lRank, cRank } = cItem;
+      const color = getColor(item);
+      const itemName = getField(item, "name");
+
+      const yP = topPadding + (pRank - 1) * rowH;
+      const yL = topPadding + (lRank - 1) * rowH;
+      const yC = topPadding + (cRank - 1) * rowH;
+
+      // Bézier curve P -> L
+      const c1x = xP_dot + 75;
+      const c2x = xL_dotIn - 75;
+      const path1 = `M ${xP_dot} ${yP} C ${c1x} ${yP}, ${c2x} ${yL}, ${xL_dotIn} ${yL}`;
+
+      // Bézier curve L -> C
+      const c3x = xL_dotOut + 75;
+      const c4x = xC_dot - 75;
+      const path2 = `M ${xL_dotOut} ${yL} C ${c3x} ${yL}, ${c4x} ${yC}, ${xC_dot} ${yC}`;
+
+      const debarTxt = item.sanctionStats.severeSanctionsPct + ' % ' + t("debarredLabel").toLowerCase();
+      const shortName = itemName.length > 24 ? (itemName.substring(0, 22) + '…') : itemName;
+
+      svgHtml += `
+        <g class="flow-crime-group" data-crime-id="${item.id}" onmouseenter="window.App.highlightCrimeFlow('${item.id}')" onmouseleave="window.App.resetCrimeFlow()" style="transition: opacity 0.2s ease;">
+          <!-- Flow spojnice -->
+          <path class="flow-path flow-path-1" d="${path1}" stroke="${color}" stroke-width="2.2" opacity="0.45"/>
+          <path class="flow-path flow-path-2" d="${path2}" stroke="${color}" stroke-width="2.2" opacity="0.45"/>
+
+          <!-- 1. Veřejnost / Vaše hlasy Sloupec -->
+          <g class="flow-node-group">
+            <text x="${xP_text}" y="${yP + 4}" fill="var(--text-primary)" font-size="12" font-family="system-ui, sans-serif" text-anchor="end">
+              <tspan fill="#38bdf8" font-weight="700">#${pRank}</tspan> ${shortName}
+            </text>
+            <circle class="flow-node-circle" cx="${xP_dot}" cy="${yP}" r="4.5" fill="${color}" stroke="var(--bg-surface)" stroke-width="1.5"/>
+          </g>
+
+          <!-- 2. Standardy & Harm Sloupec -->
+          <g class="flow-node-group">
+            <circle class="flow-node-circle" cx="${xL_dotIn}" cy="${yL}" r="4.5" fill="${color}" stroke="var(--bg-surface)" stroke-width="1.5"/>
+            <text x="${xL_text}" y="${yL + 4}" fill="var(--text-primary)" font-size="12" font-family="system-ui, sans-serif" text-anchor="middle">
+              <tspan fill="#fbbf24" font-weight="700">#${lRank}</tspan> ${shortName}
+            </text>
+            <circle class="flow-node-circle" cx="${xL_dotOut}" cy="${yL}" r="4.5" fill="${color}" stroke="var(--bg-surface)" stroke-width="1.5"/>
+          </g>
+
+          <!-- 3. Sankce Sloupec -->
+          <g class="flow-node-group">
+            <circle class="flow-node-circle" cx="${xC_dot}" cy="${yC}" r="4.5" fill="${color}" stroke="var(--bg-surface)" stroke-width="1.5"/>
+            <text x="${xC_text}" y="${yC + 4}" fill="var(--text-primary)" font-size="12" font-family="system-ui, sans-serif" text-anchor="start">
+              <tspan fill="#34d399" font-weight="700">#${cRank}</tspan> ${shortName} (${debarTxt})
+            </text>
+          </g>
+        </g>
+      `;
+    });
+
+    svgHtml += `
+        </g>
+      </svg>
+    `;
+
+    svgContainer.innerHTML = svgHtml;
+    resetCrimeFlow();
+  }
+
+  function highlightCrimeFlow(crimeId) {
+    const groups = document.querySelectorAll(".flow-crime-group");
+    const item = window.MISCONDUCT_DATA.find(c => c.id === crimeId);
+    if (!item) return;
+
+    const isUserPersp = state.flowFirstColumnMode === "user";
+    const labelWho = isUserPersp ? (state.currentLang === "cs" ? "Vy" : "You") : (state.currentLang === "cs" ? "Veřejnost" : "Community");
+
+    const tooltipBox = document.getElementById("flow-hover-tooltip-box");
+
+    // Zvýrazníme vybraný delikt a ztlumíme ostatní
+    groups.forEach(g => {
+      const isTarget = g.dataset.crimeId === crimeId;
+      g.classList.toggle("flow-highlighted", isTarget);
+      g.classList.toggle("flow-dimmed", !isTarget);
+      
+      const paths = g.querySelectorAll(".flow-path");
+      paths.forEach(p => {
+        if (isTarget) {
+          p.setAttribute("stroke-width", "4.8");
+          p.setAttribute("opacity", "1");
+        } else {
+          p.setAttribute("stroke-width", "1.5");
+          p.setAttribute("opacity", "0.1");
+        }
+      });
+
+      const circles = g.querySelectorAll(".flow-node-circle");
+      circles.forEach(c => {
+        if (isTarget) {
+          c.setAttribute("r", "7");
+          c.setAttribute("stroke-width", "2.5");
+        } else {
+          c.setAttribute("r", "4.5");
+          c.setAttribute("stroke-width", "1.5");
+        }
+      });
+    });
+
+    if (tooltipBox) {
+      const score = isUserPersp ? getUserScore(item.id) : getGlobalScore(item.id);
+      const data = [...window.MISCONDUCT_DATA];
+      
+      const col1Sorted = [...data].sort((a, b) => (isUserPersp ? getUserScore(b.id).elo : getGlobalScore(b.id).elo) - (isUserPersp ? getUserScore(a.id).elo : getGlobalScore(a.id).elo));
+      const col2Sorted = [...data].sort((a, b) => b.harmAnalysis.harmScore - a.harmAnalysis.harmScore);
+      const col3Sorted = [...data].sort((a, b) => b.sanctionStats.severeSanctionsPct - a.sanctionStats.severeSanctionsPct);
+
+      const pRank = col1Sorted.findIndex(c => c.id === crimeId) + 1;
+      const lRank = col2Sorted.findIndex(c => c.id === crimeId) + 1;
+      const cRank = col3Sorted.findIndex(c => c.id === crimeId) + 1;
+
+      const itemName = getField(item, "name");
+      const itemCat = getField(item, "categoryLabel");
+
+      tooltipBox.innerHTML = `
+        <span>🔎 <strong>${itemName}</strong> (${itemCat}) &bull; 👥 1. ${labelWho}: <strong>#${pRank} (${score.elo} Elo)</strong> &bull; ⚖️ 2. ${t("col2Header")}: <strong>#${lRank} (${item.harmAnalysis.harmScore}/100)</strong> &bull; 🛑 3. ${t("col3Header")}: <strong>#${cRank} (${item.sanctionStats.severeSanctionsPct}% ${t("debarredLabel").toLowerCase()})</strong></span>
+      `;
+      tooltipBox.style.borderColor = "var(--accent-primary)";
+    }
+  }
+
+  function resetCrimeFlow() {
+    const groups = document.querySelectorAll(".flow-crime-group");
+    groups.forEach(g => {
+      g.classList.remove("flow-highlighted", "flow-dimmed");
+      const paths = g.querySelectorAll(".flow-path");
+      paths.forEach(p => {
+        p.setAttribute("stroke-width", "2.2");
+        p.setAttribute("opacity", "0.45");
+      });
+      const circles = g.querySelectorAll(".flow-node-circle");
+      circles.forEach(c => {
+        c.setAttribute("r", "4.5");
+        c.setAttribute("stroke-width", "1.5");
+      });
+    });
+
+    const tooltipBox = document.getElementById("flow-hover-tooltip-box");
+    if (tooltipBox) {
+      tooltipBox.innerHTML = `<span>${t("flowLegendDefault")}</span>`;
+      tooltipBox.style.borderColor = "var(--border-medium)";
+    }
+  }
+
   function renderListView() {
-    const container = document.getElementById("rankings-container");
+    const container = document.getElementById("ranking-list-container");
     if (!container) return;
 
     let items = [...window.MISCONDUCT_DATA];
@@ -1004,170 +1340,28 @@
       items.sort((a, b) => b.sanctionStats.severeSanctionsPct - a.sanctionStats.severeSanctionsPct);
     }
 
-    container.innerHTML = `
-      <div class="rankings-list">
-        ${items.map((item, idx) => {
-          const score = getActiveScore(item.id);
-          const posClass = idx < 3 ? "top-3" : "";
-          const itemName = getField(item, "name");
-          const itemCat = getField(item, "categoryLabel");
-          const itemCit = getField(item, "standardCitation");
-          return `
-            <div class="ranking-item">
-              <div class="ranking-pos ${posClass}">#${idx + 1}</div>
-              <div>
-                <div style="font-weight:700; font-size:1rem; color:var(--text-primary);">${itemName}</div>
-                <div style="font-size:0.75rem; color:var(--text-muted);">${itemCat} &bull; ${itemCit}</div>
-              </div>
-              <div style="font-family:var(--font-mono); font-size:0.9rem; font-weight:700; color:var(--accent-primary);">
-                ${score.elo} Elo
-              </div>
-              <div>
-                <span class="card-category-badge" style="font-size:0.75rem;">Harm: ${item.harmAnalysis.harmScore}/100</span>
-              </div>
-            </div>
-          `;
-        }).join("")}
-      </div>
-    `;
-  }
-
-  function renderFlowView() {
-    const container = document.getElementById("rankings-container");
-    if (!container) return;
-
-    const data = [...window.MISCONDUCT_DATA];
-    
-    const col1 = [...data].sort((a, b) => (state.flowFirstColumnMode === "user" ? getUserScore(b.id).elo : getGlobalScore(b.id).elo) - (state.flowFirstColumnMode === "user" ? getUserScore(a.id).elo : getGlobalScore(a.id).elo));
-    const col2 = [...data].sort((a, b) => b.harmAnalysis.harmScore - a.harmAnalysis.harmScore);
-    const col3 = [...data].sort((a, b) => b.sanctionStats.severeSanctionsPct - a.sanctionStats.severeSanctionsPct);
-
-    const posMap1 = {};
-    const posMap2 = {};
-    const posMap3 = {};
-    col1.forEach((item, idx) => posMap1[item.id] = idx);
-    col2.forEach((item, idx) => posMap2[item.id] = idx);
-    col3.forEach((item, idx) => posMap3[item.id] = idx);
-
-    const itemHeight = 36;
-    const gap = 8;
-    const totalHeight = data.length * (itemHeight + gap) + 60;
-    const width = 960;
-    const colWidth = 240;
-    const c1X = 30;
-    const c2X = width / 2 - colWidth / 2;
-    const c3X = width - colWidth - 30;
-
-    let svgPaths = "";
-    data.forEach(item => {
-      const y1 = 40 + posMap1[item.id] * (itemHeight + gap) + itemHeight / 2;
-      const y2 = 40 + posMap2[item.id] * (itemHeight + gap) + itemHeight / 2;
-      const y3 = 40 + posMap3[item.id] * (itemHeight + gap) + itemHeight / 2;
-
-      const p1X = c1X + colWidth;
-      const p2X_L = c2X;
-      const p2X_R = c2X + colWidth;
-      const p3X = c3X;
-
-      const strokeColor = item.severityTier === "catastrophic" ? "rgba(244, 63, 94, 0.4)" :
-                          item.severityTier === "severe" ? "rgba(251, 146, 60, 0.35)" :
-                          item.severityTier === "moderate" ? "rgba(250, 204, 21, 0.3)" : "rgba(52, 211, 153, 0.3)";
-
-      svgPaths += `
-        <path d="M ${p1X} ${y1} C ${(p1X + p2X_L) / 2} ${y1}, ${(p1X + p2X_L) / 2} ${y2}, ${p2X_L} ${y2}" fill="none" stroke="${strokeColor}" stroke-width="2" class="flow-link" data-id="${item.id}" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()" />
-        <path d="M ${p2X_R} ${y2} C ${(p2X_R + p3X) / 2} ${y2}, ${(p2X_R + p3X) / 2} ${y3}, ${p3X} ${y3}" fill="none" stroke="${strokeColor}" stroke-width="2" class="flow-link" data-id="${item.id}" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()" />
+    container.innerHTML = items.map((item, idx) => {
+      const score = getActiveScore(item.id);
+      const posClass = idx < 3 ? "top-3" : "";
+      const itemName = getField(item, "name");
+      const itemCat = getField(item, "categoryLabel");
+      const itemCit = getField(item, "standardCitation");
+      return `
+        <div class="ranking-item">
+          <div class="ranking-pos ${posClass}">#${idx + 1}</div>
+          <div>
+            <div style="font-weight:700; font-size:1rem; color:var(--text-primary);">${itemName}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">${itemCat} &bull; ${itemCit}</div>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:0.9rem; font-weight:700; color:var(--accent-primary);">
+            ${score.elo} Elo
+          </div>
+          <div>
+            <span class="card-category-badge" style="font-size:0.75rem;">Harm: ${item.harmAnalysis.harmScore}/100</span>
+          </div>
+        </div>
       `;
-    });
-
-    const isLight = document.documentElement.getAttribute("data-theme") === "light";
-    const nodeBg = isLight ? "#ffffff" : "#1e293b";
-    const nodeBorder = isLight ? "#cbd5e1" : "#334155";
-    const nodeText = isLight ? "#0f172a" : "#f8fafc";
-    const headerText = isLight ? "#64748b" : "#94a3b8";
-
-    container.innerHTML = `
-      <div class="flow-diagram-wrapper">
-        <svg width="100%" height="${totalHeight}" viewBox="0 0 ${width} ${totalHeight}" style="min-width: 800px;">
-          <text x="${c1X + colWidth/2}" y="22" fill="${headerText}" font-size="12" font-weight="700" text-anchor="middle">
-            ${state.flowFirstColumnMode === 'user' ? t("col1User") : t("col1Public")}
-          </text>
-          <text x="${c2X + colWidth/2}" y="22" fill="#38bdf8" font-size="12" font-weight="700" text-anchor="middle">
-            ${t("col2Header")}
-          </text>
-          <text x="${c3X + colWidth/2}" y="22" fill="#fb7185" font-size="12" font-weight="700" text-anchor="middle">
-            ${t("col3Header")}
-          </text>
-
-          ${svgPaths}
-
-          <!-- Column 1 Nodes -->
-          ${col1.map((item, idx) => {
-            const y = 40 + idx * (itemHeight + gap);
-            const name = getField(item, "name");
-            return `
-              <g class="flow-node" data-id="${item.id}" transform="translate(${c1X}, ${y})" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()">
-                <rect class="flow-node-rect" width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
-                <text class="flow-node-text" x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">#${idx + 1} ${name.substring(0, 24)}...</text>
-              </g>
-            `;
-          }).join("")}
-
-          <!-- Column 2 Nodes -->
-          ${col2.map((item, idx) => {
-            const y = 40 + idx * (itemHeight + gap);
-            const name = getField(item, "name");
-            return `
-              <g class="flow-node" data-id="${item.id}" transform="translate(${c2X}, ${y})" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()">
-                <rect class="flow-node-rect" width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
-                <text class="flow-node-text" x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">#${idx + 1} ${name.substring(0, 24)}...</text>
-              </g>
-            `;
-          }).join("")}
-
-          <!-- Column 3 Nodes -->
-          ${col3.map((item, idx) => {
-            const y = 40 + idx * (itemHeight + gap);
-            const name = getField(item, "name");
-            return `
-              <g class="flow-node" data-id="${item.id}" transform="translate(${c3X}, ${y})" onmouseenter="window.App.highlightOffenseFlow('${item.id}')" onmouseleave="window.App.resetOffenseFlow()">
-                <rect class="flow-node-rect" width="${colWidth}" height="${itemHeight}" rx="6" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1"/>
-                <text class="flow-node-text" x="10" y="22" fill="${nodeText}" font-size="11" font-weight="600">#${idx + 1} ${name.substring(0, 24)}...</text>
-              </g>
-            `;
-          }).join("")}
-        </svg>
-      </div>
-    `;
-  }
-
-  function highlightOffenseFlow(offenseId) {
-    const nodes = document.querySelectorAll(".flow-node");
-    const links = document.querySelectorAll(".flow-link");
-
-    nodes.forEach(node => {
-      const isTarget = node.dataset.id === offenseId;
-      node.classList.toggle("flow-node-highlighted", isTarget);
-      node.classList.toggle("flow-node-dimmed", !isTarget);
-    });
-
-    links.forEach(link => {
-      const isTarget = link.dataset.id === offenseId;
-      link.classList.toggle("flow-link-highlighted", isTarget);
-      link.classList.toggle("flow-link-dimmed", !isTarget);
-    });
-  }
-
-  function resetOffenseFlow() {
-    const nodes = document.querySelectorAll(".flow-node");
-    const links = document.querySelectorAll(".flow-link");
-
-    nodes.forEach(node => {
-      node.classList.remove("flow-node-highlighted", "flow-node-dimmed");
-    });
-
-    links.forEach(link => {
-      link.classList.remove("flow-link-highlighted", "flow-link-dimmed");
-    });
+    }).join("");
   }
 
   // =========================================================================
@@ -1430,6 +1624,21 @@
       renderRankingView();
     });
 
+    // Flow Perspective Toggle Listeners
+    document.getElementById("btn-flow-persp-public")?.addEventListener("click", () => {
+      state.flowFirstColumnMode = "public";
+      document.getElementById("btn-flow-persp-public")?.classList.add("active");
+      document.getElementById("btn-flow-persp-user")?.classList.remove("active");
+      renderFlowBumpChart();
+    });
+
+    document.getElementById("btn-flow-persp-user")?.addEventListener("click", () => {
+      state.flowFirstColumnMode = "user";
+      document.getElementById("btn-flow-persp-user")?.classList.add("active");
+      document.getElementById("btn-flow-persp-public")?.classList.remove("active");
+      renderFlowBumpChart();
+    });
+
     // Methodology Modal Listeners
     document.getElementById("open-methodology-btn")?.addEventListener("click", openMethodologyModal);
     document.getElementById("modal-close-btn")?.addEventListener("click", closeMethodologyModal);
@@ -1454,8 +1663,10 @@
     toggleTheme,
     setLanguage,
     toggleLanguage,
-    highlightOffenseFlow,
-    resetOffenseFlow,
+    highlightCrimeFlow,
+    resetCrimeFlow,
+    highlightOffenseFlow: highlightCrimeFlow,
+    resetOffenseFlow: resetCrimeFlow,
     openMethodologyModal,
     closeMethodologyModal
   };
