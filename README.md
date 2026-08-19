@@ -42,7 +42,7 @@
 
 - **🌐 Multilingual Support & Hashtag Linking (EN / CS)**:
   - Complete, professional bilingual localization in **English** and **Czech** (`#en` / `#cs`).
-  - Seamless hashtag URL linking: append `#cs` (e.g. `https://karelberka.github.io/academic-misconduct-dilemmas/#cs`) to open the app directly in Czech.
+  - Seamless hashtag URL linking: append `#cs` (e.g. `https://karelberka.github.io/academic-misconduct-dilemmas/#cs) to open the app directly in Czech.
 
 - **🌓 Dark & Light Theme**:
   - Full support for dark and light modes with anti-FOUT and reactive SVG Flow chart adjustments.
@@ -59,12 +59,12 @@
 No build tools, bundlers, or package installations are required. Open `index.html` in any modern web browser.
 
 ### Deploying to GitHub Pages
-1. Push this repository to GitHub at `https://github.com/KarelBerka/academic-misconduct-dilemmas`.
+1. Push this repository to GitHub at `https://github.com/KarelBerka/academic-misconduct-dilemmas.
 2. Go to **Settings** -> **Pages**.
 3. Under **Build and deployment**, select:
    - **Source**: `Deploy from a branch`
    - **Branch**: `main` / `/ (root)`
-4. The site will be live within a minute at `https://karelberka.github.io/academic-misconduct-dilemmas/`.
+4. The site will be live within a minute at `https://karelberka.github.io/academic-misconduct-dilemmas/.
 
 ---
 

@@ -254,7 +254,7 @@ window.MISCONDUCT_DATA = [
       "retractionWatchTag": "biosecurity-durc-breaches",
       "url": "https://retractionwatch.com/?s=gain+of+function"
     },
-    "standardUrl": "https://osp.od.nih.gov/biotechnology/dual-use-research-of-concern/"
+    "standardUrl": "https://en.wikipedia.org/wiki/Dual-use_technology"
   },
   {
     "id": "active-lab-sample-sabotage",
@@ -296,7 +296,7 @@ window.MISCONDUCT_DATA = [
       "retractionWatchTag": "laboratory-sabotage",
       "url": "https://retractionwatch.com/?s=Vipul+Bhrigu"
     },
-    "standardUrl": "https://www.law.cornell.edu/wex/criminal_mischief"
+    "standardUrl": "https://www.law.cornell.edu/uscode/text/18/1361"
   },
   {
     "id": "commercial-paper-mill-purchasing",
@@ -506,7 +506,7 @@ window.MISCONDUCT_DATA = [
       "retractionWatchTag": "reviewer-misconduct-scooping",
       "url": "https://retractionwatch.com/2016/12/12/dear-peer-reviewer-stole-paper-authors-worst-nightmare/"
     },
-    "standardUrl": "https://grants.nih.gov/policy/peer/index.htm"
+    "standardUrl": "https://www.nature.com/articles/d41586-020-00706-0"
   },
   {
     "id": "severe-animal-welfare-protocol-breach",
@@ -588,7 +588,7 @@ window.MISCONDUCT_DATA = [
       "summary": "The Havasupai Tribe sued Arizona State University after blood samples donated for diabetes research were used for unauthorized schizophrenia, inbreeding, and migration studies.",
       "summary_cs": "Kmen Havasupai zažaloval univerzitu poté, co vzorky darované na výzkum diabetu byly bez souhlasu použity na genetické studie inbreedingu.",
       "retractionWatchTag": "biopiracy-indigenous-genomics",
-      "url": "https://en.wikipedia.org/wiki/Havasupai_Tribe_v._Arizona_Board_of_Regents"
+      "url": "https://www.nature.com/articles/4641112a"
     },
     "standardUrl": "https://www.cbd.int/abs/"
   },
@@ -800,7 +800,7 @@ window.MISCONDUCT_DATA = [
       "retractionWatchTag": "citation-cartels-suppression",
       "url": "https://retractionwatch.com/?s=citation+cartel"
     },
-    "standardUrl": "https://clarivate.com/products/scientific-and-academic-research/research-discovery-and-workflow-solutions/web-of-science/journal-citation-reports/"
+    "standardUrl": "https://en.wikipedia.org/wiki/Journal_Citation_Reports"
   },
   {
     "id": "coercive-gift-authorship-extortion",
@@ -884,7 +884,7 @@ window.MISCONDUCT_DATA = [
       "retractionWatchTag": "brian-wansink-p-hacking",
       "url": "https://retractionwatch.com/?s=Brian+Wansink"
     },
-    "standardUrl": "https://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108"
+    "standardUrl": "https://www.amstat.org/"
   },
   {
     "id": "predatory-journal-hijacking-fraud",
@@ -1178,6 +1178,6 @@ window.MISCONDUCT_DATA = [
       "retractionWatchTag": "data-availability-retractions",
       "url": "https://retractionwatch.com/?s=raw+data+retraction"
     },
-    "standardUrl": "https://www.go-fair.org/fair-principles/"
+    "standardUrl": "https://www.nature.com/articles/sdata201618"
   }
 ];
