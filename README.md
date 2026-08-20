@@ -58,6 +58,17 @@
 ### Local Development
 No build tools, bundlers, or package installations are required. Open `index.html` in any modern web browser.
 
+### Link Quality Regression Check
+Before deploying, run:
+
+```bash
+python scripts/check_case_links.py
+# or
+node scripts/check-case-links.js
+```
+
+This verifies that all `caseStudy.url` and `standardUrl` entries in `misconduct-data.js` point to direct, specific case studies and authoritative guidelines rather than generic search-query or index URLs.
+
 ### Deploying to GitHub Pages
 1. Push this repository to GitHub at `https://github.com/KarelBerka/academic-misconduct-dilemmas.
 2. Go to **Settings** -> **Pages**.
