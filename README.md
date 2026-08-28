@@ -112,7 +112,7 @@ CREATE POLICY "Allow public reading of votes" ON public.academic_votes
 ## 🔬 Methodology & Data Provenance
 
 ### 1. Provenance of Dilemma Scenarios
-All 28 dilemma scenarios are model anonymized cases reconstructing authentic patterns of scientific misconduct. They are synthesized from:
+All 29 dilemma scenarios are model anonymized cases reconstructing authentic patterns of scientific misconduct. They are synthesized from:
 * Official investigation findings published by the **US Office of Research Integrity (ORI Case Summaries)**.
 * University investigative committee reports (e.g. *Tilburg University – Stapel Investigation*, *Karolinska Institutet – Macchiarini Report*, *Harvard Medical School – Anversa Review*).
 * Retraction notices and investigative reports indexed in the **Retraction Watch Database (RWDB)**.

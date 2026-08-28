@@ -299,6 +299,48 @@ window.MISCONDUCT_DATA = [
     "standardUrl": "https://www.law.cornell.edu/uscode/text/18/1361"
   },
   {
+    "id": "commercial-antibody-data-fabrication",
+    "name": "Commercial Antibody Validation & Blot Image Fabrication",
+    "name_cs": "Komerční fabrikace a manipulace validačních dat a snímků protilátek",
+    "category": "FFP",
+    "categoryLabel": "Data Fabrication & Falsification",
+    "categoryLabel_cs": "Fabrikace a falzifikace dat (FFP)",
+    "severityTier": "severe",
+    "delictType": "commercial_academic_fraud",
+    "scenario": "Commercial life-science suppliers systematically fabricated and digitally altered more than 18,000 Western blot 'validation images' in sales catalogues—reusing identical synthetic backgrounds across hundreds of distinct antibodies to falsely certify untested reagents as functionally validated.",
+    "scenario_cs": "Komerční dodavatelé laboratorních reagentů systematicky falšovali a digitálně upravovali více než 18 000 snímků Western blotů v prodejních katalozích – vkládali identická syntetická pozadí u stovek různých protilátek, aby klamavě doložili funkčnost a validaci netestovaných produktů.",
+    "standardCitation": "ISO 9001 / ISO 17025 Quality Standards & NIH Reagent Authentication Rigor Policy",
+    "standardCitation_cs": "Normy kvality ISO 9001 / ISO 17025 a Pravidla NIH pro autentizaci a validaci klíčových reagentů",
+    "standardText": "Commercial reagent vendors and researchers must ensure authentic, reproducible validation of biological materials. Reusing synthetic image backgrounds or fabricating blot data to advertise antibody specificity constitutes commercial fraud and severely compromises downstream scientific reproducibility.",
+    "standardText_cs": "Dodavatelé vědeckých reagentů a výzkumníci musí zajistit autentickou a reprodukovatelnou validaci biologických materiálů. Používání syntetických pozadí a fabrikace snímků k prokázání specificity protilátek představuje klamavou praktiku s devastujícím dopadem na reprodukovatelnost vědy.",
+    "statutoryBenchmark": "FTC Deceptive Marketing Sanctions, Vendor Catalog Purges & NIH Grantee Reagent Bans",
+    "statutoryBenchmark_cs": "Sankce obchodních inspekcí za klamavou reklamu, stažení tisíců produktů z katalogů a zákaz dodávek pro grantové projekty",
+    "sanctionStats": {
+      "severeSanctionsPct": 68,
+      "moderateSanctionsPct": 26,
+      "minorSanctionsPct": 6,
+      "avgDebarmentYears": 5,
+      "avgSentenceDescription": "Massive commercial catalog purges, federal trade investigations for deceptive advertising, and blacklisting of unvalidated reagent lots by major funding agencies.",
+      "avgSentenceDescription_cs": "Plošné stažení tisíců položek z katalogů distributorů, vyšetřování regulačními orgány pro klamavé obchodní praktiky a zařazení neověřených šarží na černou listinu poskytovatelů grantů."
+    },
+    "harmAnalysis": {
+      "scientificHarm": "Over 50% of commercial antibodies fail to work as advertised, invalidating years of laboratory experiments, corrupting biomedical literature, and causing over $1 billion in wasted research funding annually.",
+      "scientificHarm_cs": "Více než 50 % komerčních protilátek nefunguje podle specifikací, což znehodnocuje roky laboratorních experimentů, kontaminuje literaturu falešnými výsledky a způsobuje roční škody přes 1 miliardu dolarů.",
+      "societalImpact": "Delays translational biomedical pipelines and cancer drug discoveries by misleading academic and clinical research teams with non-functional or non-specific reagents.",
+      "societalImpact_cs": "Zpomaluje vývoj léčiv a biomedicínský výzkum v onkologii tím, že zásobuje akademické i klinické laboratoře nefunkčními či nespecifickými reagenciemi.",
+      "harmScore": 88
+    },
+    "caseStudy": {
+      "name": "Reese Richardson / Nature Investigation: 18,000+ Questionable Antibody Images (Thermo Fisher, G-Biosciences, LSBio, Origene)",
+      "retractionCount": 0,
+      "summary": "Metascientist Reese Richardson and sleuths uncovered >18,000 fabricated Western blot validation images across 15 vendors (including Thermo Fisher, G-Biosciences, LSBio, and Origene), revealing widespread synthetic background reuse.",
+      "summary_cs": "Metavědec Reese Richardson s týmem odhalil přes 18 000 zfalšovaných validačních snímků Western blotů u 15 prodejců (včetně Thermo Fisher, G-Biosciences, LSBio a Origene) s opakovaně vkládaným umělým pozadím.",
+      "retractionWatchTag": "antibody-catalog-image-fabrication",
+      "url": "https://www.nature.com/articles/d41586-026-02635-w"
+    },
+    "standardUrl": "https://www.nature.com/articles/d41586-026-02635-w"
+  },
+  {
     "id": "commercial-paper-mill-purchasing",
     "name": "Commercial Paper Mill Manuscript & Authorship Purchase",
     "name_cs": "Nákup falešných článků a autorství z „továren na články“ (Paper Mills)",
