@@ -104,11 +104,6 @@
         </div>
       </div>
 
-      <!-- Duel Arena Grid -->
-      <div id="duel-arena">
-        <!-- Rendered dynamically by app.js -->
-      </div>
-
       <!-- Matchup Result Panel (Shown after vote) -->
       <div class="matchup-result-panel" id="matchup-result-panel">
         <div class="result-panel-header">
@@ -118,7 +113,20 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
-        <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.5;" id="verdict-explanation-text"></p>
+        <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.55;" id="verdict-explanation-text"></p>
+      </div>
+
+      <!-- Duel Arena Grid -->
+      <div id="duel-arena">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Bottom Duel Action Bar (Shown when cards are revealed) -->
+      <div class="bottom-duel-action-bar" id="bottom-duel-action-bar" style="display:none;">
+        <button class="next-duel-btn bottom-btn" id="next-duel-btn-bottom" type="button">
+          <span id="next-duel-btn-bottom-text">Next Dilemma (Space / Enter)</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
       </div>
     </section>
 
@@ -171,6 +179,9 @@
       </div>
 
       <!-- Flow Diagram SVG Container -->
+      <div class="flow-scroll-hint" id="flow-scroll-hint-text">
+        👉 Swipe horizontally to view all 3 comparison columns
+      </div>
       <div class="flow-svg-scroll-container" id="flow-svg-outer-container">
         <div id="ranking-flow-svg-container">
           <!-- Dynamically rendered SVG Flow Graph -->

@@ -124,7 +124,10 @@
       flowHeaderCol2: "⚖️ 2. Institutional Standards (ORI/COPE)",
       flowHeaderCol2Sub: "US ORI 42 CFR / COPE Codes ↗",
       flowHeaderCol3: "🛑 3. Disciplinary Sanction Rate",
-      flowHeaderCol3Sub: "Retraction Watch DB / Case Findings ↗"
+      flowHeaderCol3Sub: "Retraction Watch DB / Case Findings ↗",
+      userChoiceBadge: "Your Choice",
+      comparedChoiceBadge: "Compared Case",
+      flowScrollHint: "👉 Swipe horizontally to view all 3 comparison columns"
     },
     cs: {
       brandTitle: "Akademická Dilemata",
@@ -216,7 +219,10 @@
       flowHeaderCol2: "⚖️ 2. Etické standardy ORI / COPE",
       flowHeaderCol2Sub: "US ORI 42 CFR / COPE kodexy ↗",
       flowHeaderCol3: "🛑 3. Reálné disciplinární postihy",
-      flowHeaderCol3Sub: "Retraction Watch DB / Šetření ↗"
+      flowHeaderCol3Sub: "Retraction Watch DB / Šetření ↗",
+      userChoiceBadge: "Vaše volba",
+      comparedChoiceBadge: "Srovnávaný delikt",
+      flowScrollHint: "👉 Posunutím do stran zobrazíte všechny 3 sloupce srovnání"
     }
   };
 
@@ -359,6 +365,8 @@
     setElem("persp-public-text", t("perspPublicBtn"));
     setElem("persp-user-text", t("perspUserBtn"));
     setElem("flow-legend-default-text", t("flowLegendDefault"));
+    setElem("flow-scroll-hint-text", t("flowScrollHint"));
+    setElem("next-duel-btn-bottom-text", t("nextDuelBtn"));
 
     setElem("filter-all-btn", t("filterAll"));
     setElem("filter-ffp-btn", t("filterFFP"));
@@ -781,6 +789,7 @@
       <div class="misconduct-card" id="card-${item.id}" data-item-id="${item.id}" onclick="window.App.handleVote('${item.id}')">
         <div class="card-header-meta">
           <span class="card-option-tag">${t("caseOptionTag", sideLetter, kbdKey)}</span>
+          <span class="user-choice-badge" id="choice-badge-${item.id}" style="display:none;"></span>
         </div>
 
         <div class="card-scenario-box">
@@ -892,6 +901,19 @@
       resultPanel.classList.remove("visible");
     }
 
+    const bottomBar = document.getElementById("bottom-duel-action-bar");
+    if (bottomBar) {
+      bottomBar.style.display = "none";
+    }
+
+    // On mobile, gently scroll to top of duel section on new dilemma
+    if (window.innerWidth <= 900) {
+      const arena = document.getElementById("view-duel");
+      if (arena) {
+        arena.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
     updateDuelCounter();
   }
 
@@ -976,14 +998,27 @@
 
   function updateVerdictTag(target, opponent, policyStrictId) {
     const el = document.getElementById(`verdict-tag-${target.id}`);
-    if (!el) return;
+    if (el) {
+      if (policyStrictId === null) {
+        el.innerHTML = `<span class="verdict-tag equal">${t("verdictEqual")} (${target.harmAnalysis.harmScore} vs ${opponent.harmAnalysis.harmScore})</span>`;
+      } else if (policyStrictId === target.id) {
+        el.innerHTML = `<span class="verdict-tag stricter">${t("verdictHigher")} (${target.harmAnalysis.harmScore}/100)</span>`;
+      } else {
+        el.innerHTML = `<span class="verdict-tag milder">${t("verdictLower")} (${target.harmAnalysis.harmScore}/100)</span>`;
+      }
+    }
 
-    if (policyStrictId === null) {
-      el.innerHTML = `<span class="verdict-tag equal">${t("verdictEqual")} (${target.harmAnalysis.harmScore} vs ${opponent.harmAnalysis.harmScore})</span>`;
-    } else if (policyStrictId === target.id) {
-      el.innerHTML = `<span class="verdict-tag stricter">${t("verdictHigher")} (${target.harmAnalysis.harmScore}/100)</span>`;
-    } else {
-      el.innerHTML = `<span class="verdict-tag milder">${t("verdictLower")} (${target.harmAnalysis.harmScore}/100)</span>`;
+    const badgeEl = document.getElementById(`choice-badge-${target.id}`);
+    if (badgeEl) {
+      if (state.userChoiceId === target.id) {
+        badgeEl.textContent = `✓ ${t("userChoiceBadge")}`;
+        badgeEl.className = "user-choice-badge chosen";
+        badgeEl.style.display = "inline-flex";
+      } else {
+        badgeEl.textContent = t("comparedChoiceBadge");
+        badgeEl.className = "user-choice-badge compared";
+        badgeEl.style.display = "inline-flex";
+      }
     }
   }
 
@@ -991,6 +1026,7 @@
     const panel = document.getElementById("matchup-result-panel");
     const headingEl = document.getElementById("verdict-heading-text");
     const explEl = document.getElementById("verdict-explanation-text");
+    const bottomBar = document.getElementById("bottom-duel-action-bar");
     if (!panel || !headingEl || !explEl) return;
 
     const sName = getField(selected, "name");
@@ -1008,6 +1044,14 @@
     }
 
     panel.classList.add("visible");
+    if (bottomBar) {
+      bottomBar.style.display = "block";
+    }
+
+    // Scroll result panel into view on mobile so user immediately sees comparison outcome
+    if (window.innerWidth <= 900) {
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
   }
 
   // =========================================================================
@@ -1365,15 +1409,14 @@
       return `
         <div class="ranking-item">
           <div class="ranking-pos ${posClass}">#${idx + 1}</div>
-          <div>
-            <div style="font-weight:700; font-size:1rem; color:var(--text-primary);">${itemName}</div>
-            <div style="font-size:0.75rem; color:var(--text-muted);">${itemCat} &bull; ${itemCit}</div>
+          <div class="ranking-main-info">
+            <div class="ranking-name">${itemName}</div>
+            <div class="ranking-sub">${itemCat} &bull; ${itemCit}</div>
           </div>
-          <div style="font-family:var(--font-mono); font-size:0.9rem; font-weight:700; color:var(--accent-primary);">
-            ${score.elo} Elo
-          </div>
-          <div>
-            <span class="card-category-badge" style="font-size:0.75rem;">Harm: ${item.harmAnalysis.harmScore}/100</span>
+          <div class="ranking-metrics">
+            <span class="ranking-elo-badge">${score.elo} Elo</span>
+            <span class="ranking-harm-badge">⚖️ Harm: ${item.harmAnalysis.harmScore}/100</span>
+            <span class="ranking-sanction-badge">🛑 ${item.sanctionStats.severeSanctionsPct}% ${t("debarredLabel").toLowerCase()}</span>
           </div>
         </div>
       `;
@@ -1590,6 +1633,7 @@
     });
 
     document.getElementById("next-duel-btn")?.addEventListener("click", loadNewDuel);
+    document.getElementById("next-duel-btn-bottom")?.addEventListener("click", loadNewDuel);
 
     window.addEventListener("keydown", (e) => {
       const activeTab = document.querySelector(".view-section.active");
