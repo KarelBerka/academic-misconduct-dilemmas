@@ -3,14 +3,9 @@
  */
 
 window.ACADEMIC_CONFIG = {
-  // Your Supabase Project URL (e.g. 'https://<project-ref>.supabase.co')
-  supabaseUrl: "https://byvjqnbpltjwcluigkfj.supabase.co",
-
-  // Your Supabase Publishable / Anon API Key
-  supabaseAnonKey: "sb_publishable_IMAMxmi6B1ui_CposyQnGA_G_wZPVcd",
-
-  // Dedicated table name exclusively for academic misconduct votes (never use 'votes')
-  votesTable: "academic_votes",
+  // Your Google Apps Script Web App URL (e.g. 'https://script.google.com/macros/s/AKfycb.../exec')
+  // Set to empty string "" to run purely in local mode
+  googleAppScriptUrl: "",
 
   // Smart matchmaking settings (Elo proximity matching)
   matchmaking: {

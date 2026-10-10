@@ -110,7 +110,7 @@
       footerMethodology: "Methodology & Data Provenance",
       modalHeading: "Methodology & Data Provenance",
       sanctionMethodologyTooltip: "Estimated institutional response distribution synthesized from US ORI case findings, Retraction Watch Database (RWDB) retraction analyses (Fang et al., PNAS 2012), and COPE sanction workflows.",
-      perspPublicBtn: "👥 Column 1: Community Consensus (Global Supabase Elo)",
+      perspPublicBtn: "👥 Column 1: Community Consensus (Global Cloud Elo)",
       perspUserBtn: "👤 Column 1: Your Personal Choices (Local Session)",
       flowLegendDefault: "💡 Hover over any offense or line to highlight its path across all 3 ranking systems.",
       insightStricterPublicHeader: (who) => `${who} Stricter Than Policy Codes`,
@@ -120,7 +120,7 @@
       insightStricterLawDesc: (who, name, pRank, lRank, delta) => `Institutional codes assign high severity at <strong>#${lRank}</strong>, while ${who.toLowerCase()} consider it at <strong>#${pRank}</strong> (${delta} ranks milder).`,
       insightConsensusDesc: (name, pRank, lRank, cRank) => `High alignment: <strong>#${pRank} in community/user rating</strong>, <strong>#${lRank} in policy harm</strong>, and <strong>#${cRank} in real sanctions</strong>.`,
       flowHeaderCol1: (isUser) => isUser ? "👤 1. Your Judgements" : "👥 1. Community Voting",
-      flowHeaderCol1Sub: (isUser, duels, global) => isUser ? `${duels} duels evaluated (this session)` : `Total ${global} duels (Supabase Elo)`,
+      flowHeaderCol1Sub: (isUser, duels, global) => isUser ? `${duels} duels evaluated (this session)` : `Total ${global} duels (Cloud Elo)`,
       flowHeaderCol2: "⚖️ 2. Institutional Standards (ORI/COPE)",
       flowHeaderCol2Sub: "US ORI 42 CFR / COPE Codes ↗",
       flowHeaderCol3: "🛑 3. Disciplinary Sanction Rate",
@@ -205,7 +205,7 @@
       footerMethodology: "Metodika a původ dat",
       modalHeading: "Metodika a původ dat",
       sanctionMethodologyTooltip: "Orientační rozpad institucionální praxe syntetizovaný z nálezů US ORI, analýz databáze Retraction Watch (Fang et al., PNAS 2012) a doporučených postupů COPE.",
-      perspPublicBtn: "👥 Sloupec 1: Veřejnost (Globální data ze Supabase)",
+      perspPublicBtn: "👥 Sloupec 1: Veřejnost (Globální data)",
       perspUserBtn: "👤 Sloupec 1: Vaše hlasy (Lokální hra)",
       flowLegendDefault: "💡 Najeďte kurzorem na delikt nebo linii pro zvýraznění jeho toku napříč všemi 3 žebříčky.",
       insightStricterPublicHeader: (who) => `${who} přísnější než etické standardy`,
@@ -215,7 +215,7 @@
       insightStricterLawDesc: (who, name, pRank, lRank, delta) => `Etické standardy stanovují vysokou závažnost na <strong>#${lRank}. místě</strong>, avšak ${who.toLowerCase()} čin vnímají na <strong>#${pRank}. místě</strong> (o ${delta} příček mírněji).`,
       insightConsensusDesc: (name, pRank, lRank, cRank) => `Vysoká shoda: <strong>#${pRank}. u lidí/vás</strong>, <strong>#${lRank}. v etických standardech</strong> a <strong>#${cRank}. v reálných sankcích</strong>.`,
       flowHeaderCol1: (isUser) => isUser ? "👤 1. Vaše hodnocení" : "👥 1. Hlasování komunity",
-      flowHeaderCol1Sub: (isUser, duels, global) => isUser ? `Odehráno ${duels} duelů (tato hra)` : `Celkem ${global} duelů (Supabase Elo)`,
+      flowHeaderCol1Sub: (isUser, duels, global) => isUser ? `Odehráno ${duels} duelů (tato hra)` : `Celkem ${global} duelů (Cloud Elo)`,
       flowHeaderCol2: "⚖️ 2. Etické standardy ORI / COPE",
       flowHeaderCol2Sub: "US ORI 42 CFR / COPE kodexy ↗",
       flowHeaderCol3: "🛑 3. Reálné disciplinární postihy",
@@ -611,73 +611,58 @@
   }
 
   // =========================================================================
-  // SUPABASE CLOUD SYNCHRONIZATION
+  // GOOGLE APPS SCRIPT / CLOUD SYNCHRONIZATION
   // =========================================================================
 
   async function syncWithCloudDatabase() {
     const config = window.ACADEMIC_CONFIG;
-    if (!config || !config.supabaseUrl || !config.supabaseAnonKey || config.supabaseUrl.includes("project-ref") || config.supabaseUrl.includes("vase-id")) {
+    const scriptUrl = config?.googleAppScriptUrl;
+
+    if (!scriptUrl || typeof scriptUrl !== "string" || !scriptUrl.startsWith("http")) {
       state.isCloudConnected = false;
       updateCloudStatusBadge();
       return;
     }
 
-    const tableName = "academic_votes";
-
     try {
       initGlobalScores();
-      let allVotes = [];
-      let page = 0;
-      const pageSize = 1000;
 
-      while (true) {
-        const from = page * pageSize;
-        const to = from + pageSize - 1;
-        const response = await fetch(`${config.supabaseUrl}/rest/v1/${tableName}?select=winner_id,loser_id&order=created_at.asc`, {
-          method: "GET",
-          headers: {
-            "apikey": config.supabaseAnonKey,
-            "Authorization": `Bearer ${config.supabaseAnonKey}`,
-            "Range": `${from}-${to}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${await response.text()}`);
-        }
-
-        const data = await response.json();
-        if (!Array.isArray(data) || data.length === 0) break;
-        allVotes = allVotes.concat(data);
-        if (data.length < pageSize) break;
-        page++;
-      }
-
-      state.totalGlobalVotes = allVotes.length;
-      state.isCloudConnected = true;
-
-      const kFactor = 24;
-      allVotes.forEach(v => {
-        const wId = v.winner_id;
-        const lId = v.loser_id;
-        if (state.globalScores[wId] && state.globalScores[lId]) {
-          const scoreW = state.globalScores[wId];
-          const scoreL = state.globalScores[lId];
-          const expectedW = 1 / (1 + Math.pow(10, (scoreL.elo - scoreW.elo) / 400));
-          scoreW.elo += Math.round(kFactor * (1 - expectedW));
-          scoreL.elo += Math.round(kFactor * (0 - (1 - expectedW)));
-          scoreW.wins++;
-          scoreW.matches++;
-          scoreL.matches++;
+      const response = await fetch(scriptUrl, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
         }
       });
 
-      const activeSec = document.querySelector(".view-section.active");
-      if (activeSec && activeSec.id === "view-ranking") {
-        renderRankingView();
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+      }
+
+      const data = await response.json();
+      if (data && data.status === "success") {
+        state.totalGlobalVotes = data.totalVotes || 0;
+        state.isCloudConnected = true;
+
+        if (data.scores && typeof data.scores === "object") {
+          Object.keys(data.scores).forEach(crimeId => {
+            if (state.globalScores[crimeId]) {
+              const sc = data.scores[crimeId];
+              state.globalScores[crimeId].elo = Number(sc.elo) || state.globalScores[crimeId].elo;
+              state.globalScores[crimeId].wins = Number(sc.wins) || 0;
+              state.globalScores[crimeId].matches = Number(sc.matches) || 0;
+            }
+          });
+        }
+
+        const activeSec = document.querySelector(".view-section.active");
+        if (activeSec && activeSec.id === "view-ranking") {
+          renderRankingView();
+        }
+      } else {
+        throw new Error(data?.message || "Invalid data returned from Google Apps Script");
       }
     } catch (err) {
-      console.warn("⚠️ Supabase sync failed:", err.message);
+      console.warn("⚠️ Google Apps Script sync failed (running in local mode):", err.message);
       state.isCloudConnected = false;
     }
 
@@ -686,18 +671,17 @@
 
   async function recordVoteToCloud(winnerId, loserId) {
     const config = window.ACADEMIC_CONFIG;
-    if (!config || !config.supabaseUrl || !config.supabaseAnonKey || !state.isCloudConnected) return;
+    const scriptUrl = config?.googleAppScriptUrl;
 
-    const tableName = "academic_votes";
+    if (!scriptUrl || !state.isCloudConnected) return;
 
     try {
-      await fetch(`${config.supabaseUrl}/rest/v1/${tableName}`, {
+      // Use text/plain with no-cors to reliably deliver payload to Google Apps Script without CORS preflight blocks
+      await fetch(scriptUrl, {
         method: "POST",
+        mode: "no-cors",
         headers: {
-          "apikey": config.supabaseAnonKey,
-          "Authorization": `Bearer ${config.supabaseAnonKey}`,
-          "Content-Type": "application/json",
-          "Prefer": "return=minimal"
+          "Content-Type": "text/plain;charset=utf-8"
         },
         body: JSON.stringify({
           winner_id: winnerId,
@@ -707,7 +691,7 @@
         })
       });
     } catch (e) {
-      console.warn("Error sending vote to cloud:", e.message);
+      console.warn("Error sending vote to Google Apps Script:", e.message);
     }
   }
 
@@ -716,7 +700,7 @@
     if (!badge) return;
     if (state.isCloudConnected) {
       badge.innerHTML = t("cloudBadge", state.totalGlobalVotes);
-      badge.title = state.currentLang === "cs" ? "Připojeno k centrální Supabase databázi" : "Connected to Supabase cloud database";
+      badge.title = state.currentLang === "cs" ? "Připojeno k centrální Google Sheets databázi" : "Connected to Google Sheets cloud database";
       badge.style.color = "#34d399";
     } else {
       badge.innerHTML = t("localModeBadge");
@@ -963,7 +947,7 @@
     state.totalGlobalVotes++;
     updateCloudStatusBadge();
 
-    // 3. Supabase persistence
+    // 3. Cloud persistence (Google Apps Script)
     recordVoteToCloud(selectedItem.id, otherItem.id);
 
     // Evaluate Policy Severity
@@ -1085,7 +1069,7 @@
     const totalItems = data.length;
     const isUserPersp = state.flowFirstColumnMode === "user";
 
-    // 1. Column 1 sorted: User Elo or Global Supabase Elo
+    // 1. Column 1 sorted: User Elo or Global Cloud Elo
     const firstColSorted = [...data].sort((a, b) => {
       const eloA = isUserPersp ? getUserScore(a.id).elo : getGlobalScore(a.id).elo;
       const eloB = isUserPersp ? getUserScore(b.id).elo : getGlobalScore(b.id).elo;
